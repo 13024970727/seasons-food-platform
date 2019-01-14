@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.ShopDeductionRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.ShopDeductionRecord" >
+    <id column="shop_base_info_id" property="shopBaseInfoId" jdbcType="BIGINT" />
+    <id column="unity_time" property="unityTime" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="duty_money" property="dutyMoney" jdbcType="DECIMAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="extral_picture" property="extralPicture" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+</mapper>

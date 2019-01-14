@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.seasonsfood.mall</groupId>
+    <artifactId>seasons-food-platform</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>seasons-food-platform</name>
+    <description>seasons food platform</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+
+    <modules>
+        <!--common-->
+        <module>./common-config</module>
+        <module>./common-util</module>
+        <module>./common-core</module>
+
+        <!--api-->
+        <module>./service-admin-api</module>
+        <module>./service-delivery-api</module>
+        <module>./service-business-api</module>
+        <module>./service-reporter-api</module>
+        <module>./service-font-user-api</module>
+
+        <!--service-->
+        <module>./service-admin</module>
+        <module>./service-delivery</module>
+        <module>./service-business</module>
+        <module>./service-reporter</module>
+        <module>./service-font-user</module>
+
+        <!--web-->
+        <module>./web-all-admin</module>
+        <module>./web-delivery-admin</module>
+        <module>./web-portal</module>
+        <module>./web-shop-admin</module>
+
+
+        <!--营销工具-折扣活动-->
+        <module>web-marketing</module>
+
+
+    </modules>
+
+    <!-- 配置maven地址 -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Releases</name>
+            <url>http://192.168.1.126:8862/nexus/content/repositories/central</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Snapshot</name>
+            <url>http://192.168.1.126:8862/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>nexus</id>
+            <url>http://192.168.1.126:8862/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>nexus</id>
+            <url>http://192.168.1.126:8862/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+
+
+        <!--common-->
+        <common-core.version>1.0.0-SNAPSHOT</common-core.version>
+        <common-util.version>1.0.0-SNAPSHOT</common-util.version>
+        <common-config.version>1.0.0-SNAPSHOT</common-config.version>
+
+        <!--web-->
+        <web-all-admin.version>1.0.0-SNAPSHOT</web-all-admin.version>
+        <web-delivery-admin.version>1.0.0-SNAPSHOT</web-delivery-admin.version>
+        <web-shop-admin.version>1.0.0-SNAPSHOT</web-shop-admin.version>
+        <web-portal.version>1.0.0-SNAPSHOT</web-portal.version>
+        <web-marketing.version>1.0.0-SNAPSHOT</web-marketing.version>
+
+        <!--api-->
+        <service-admin-api.version>1.0.0-SNAPSHOT</service-admin-api.version>
+        <service-business-api.version>1.0.0-SNAPSHOT</service-business-api.version>
+        <service-delivery-api.version>1.0.0-SNAPSHOT</service-delivery-api.version>
+        <service-font-user-api.version>1.0.0-SNAPSHOT</service-font-user-api.version>
+        <service-reporter-api.version>1.0.0-SNAPSHOT</service-reporter-api.version>
+        <!--营销工具-折扣活动api-->
+        <service-marketing-discount-api.version>1.0.0-SNAPSHOT</service-marketing-discount-api.version>
+        <service-marketing.version>1.0.0-SNAPSHOT</service-marketing.version>
+
+
+        <!--service-->
+        <service-admin.version>1.0.0-SNAPSHOT</service-admin.version>
+        <service-business.version>1.0.0-SNAPSHOT</service-business.version>
+        <service-delivery.version>1.0.0-SNAPSHOT</service-delivery.version>
+        <service-font-user.version>1.0.0-SNAPSHOT</service-font-user.version>
+        <service-reporter.version>1.0.0-SNAPSHOT</service-reporter.version>
+        <!---营销工具-折扣活动-->
+        <service-marketing-discount.version>1.0.0-SNAPSHOT</service-marketing-discount.version>
+       <service-marketing-api.version>1.0.0-SNAPSHOT</service-marketing-api.version>
+
+        <!-- mysql -->
+        <mysql-connector-java.version>5.1.38</mysql-connector-java.version>
+
+        <!-- shiro -->
+        <shiro.version>1.2.3</shiro.version>
+
+        <shiro-redis.version>2.4.2.1-RELEASE</shiro-redis.version>
+
+        <!--spring-data-redis-->
+        <spring-data-redis.version>1.7.0.RELEASE</spring-data-redis.version>
+
+        <!--mybatis-->
+        <mybatis.version>1.3.2</mybatis.version>
+
+        <tk.mybatis.version>1.2.4</tk.mybatis.version>
+
+        <tk-mapper.version>3.4.0</tk-mapper.version>
+
+        <!--pagehelper-->
+        <pagehelper.version>1.2.3</pagehelper.version>
+
+        <!--druid-->
+        <druid.version>1.1.10</druid.version>
+
+        <!--fastjson-->
+        <fastjson.version>1.2.12</fastjson.version>
+
+        <!--gson-->
+        <gson.version>2.3.1</gson.version>
+
+        <!--redis-->
+        <redis.clients.version>2.8.0</redis.clients.version>
+
+        <!--Swagger-->
+        <Swagger.version>2.2.2</Swagger.version>
+
+        <!--poi-->
+        <poi.version>3.9</poi.version>
+
+        <!--jwt-->
+        <jwt.version>0.9.0</jwt.version>
+
+        <!--oss-->
+        <oss.version>2.5.0</oss.version>
+
+        <!--spring-test-->
+        <spring-test.version>4.3.13.RELEASE</spring-test.version>
+
+
+        <!--aliyun sms-->
+        <aliyun-sdk-core.version>3.2.3</aliyun-sdk-core.version>
+
+        <aliyun-sdk-sms.version>1.0.0</aliyun-sdk-sms.version>
+
+        <spring-boot.version>1.5.9.RELEASE</spring-boot.version>
+
+        <!--json-->
+        <json.version>20171018</json.version>
+
+        <!--dubbo-->
+        <dubbo.version>1.0.1</dubbo.version>
+
+        <!--zookeeper-->
+        <zookeeper.version>3.4.11</zookeeper.version>
+
+        <!--zkclient-->
+        <zkclient.version>0.10</zkclient.version>
+
+        <persistence.version>1.0</persistence.version>
+
+        <!--tcc-->
+        <tcc.version>1.2.4.17</tcc.version>
+
+        <!--quartz-->
+        <quartz.version>2.2.2</quartz.version>
+
+        <!--lcn-->
+        <lcn.last.version>4.1.0</lcn.last.version>
+
+    </properties>
+
+    <dependencyManagement>
+
+        <dependencies>
+            <!--common-->
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>common-config</artifactId>
+                <version>${common-config.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>common-util</artifactId>
+                <version>${common-util.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>common-core</artifactId>
+                <version>${common-core.version}</version>
+            </dependency>
+
+
+            <!--营销工具-折扣活动api-->
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-marketing-discount-api</artifactId>
+                <version>${service-marketing-discount-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>web-marketing</artifactId>
+                <version>${web-marketing.version}</version>
+            </dependency>
+
+
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-marketing-api</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+
+
+
+
+
+            <!--service api-->
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-admin-api</artifactId>
+                <version>${service-admin-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-business-api</artifactId>
+                <version>${service-admin-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-delivery-api</artifactId>
+                <version>${service-admin-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-font-user-api</artifactId>
+                <version>${service-font-user-api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-reporter-api</artifactId>
+                <version>${service-reporter-api.version}</version>
+            </dependency>
+
+            <!--web-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <!--configuration-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${spring-boot.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba.spring.boot</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <!--zookeeper依赖-->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>${zookeeper.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>com.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>com.101tec</groupId>
+                <artifactId>zkclient</artifactId>
+                <version>${zkclient.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>${persistence.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!--aop-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <!--热加载-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <optional>true</optional>
+            </dependency>
+
+            <!--日志-->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
+            <!--mybatis-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
+            <!--mapper-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${tk.mybatis.version}</version>
+            </dependency>
+
+            <!--pagehelper-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <!-- mysql -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+
+
+
+            <!--durid-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!--fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- 使用Shiro认证 -->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-quartz</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.crazycake</groupId>
+                <artifactId>shiro-redis</artifactId>
+                <version>${shiro-redis.version}</version>
+            </dependency>
+
+            <!--Gson-->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+
+            <!--jedis-->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${spring-data-redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${redis.clients.version}</version>
+            </dependency>
+
+            <!-- Swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${Swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${Swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>${json.version}</version>
+            </dependency>
+
+            <!--POI -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
+            <!--jwt-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <!--oss-->
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${oss.version}</version>
+            </dependency>
+
+            <!--处理文件-->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring-test.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!--短信-->
+            <dependency>
+                <groupId>aliyun.java</groupId>
+                <artifactId>sdk-core</artifactId>
+                <version>${aliyun-sdk-core.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>aliyun.java</groupId>
+                <artifactId>sdk-dysmsapi</artifactId>
+                <version>${aliyun-sdk-sms.version}</version>
+            </dependency>
+
+
+            <!--quartz-->
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
+            </dependency>
+
+            <!--lcn-->
+            <dependency>
+                <groupId>com.codingapi</groupId>
+                <artifactId>tx-client</artifactId>
+                <version>${lcn.last.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.codingapi</groupId>
+                <artifactId>tx-plugins-db</artifactId>
+                <version>${lcn.last.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.codingapi</groupId>
+                <artifactId>transaction-dubbo</artifactId>
+                <version>${lcn.last.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.codingapi</groupId>
+                <artifactId>transaction-motan</artifactId>
+                <version>${lcn.last.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.codingapi</groupId>
+                <artifactId>transaction-springcloud</artifactId>
+                <version>${lcn.last.version}</version>
+            </dependency>
+
+
+
+        </dependencies>
+
+    </dependencyManagement>
+
+
+
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- 资源文件拷贝插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- java编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>jdk-1.8</id>
+            <!-- 另外一种激活方式 -->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <jdk>1.8</jdk>
+            </activation>
+            <properties>
+                <maven.compiler.source>1.8</maven.compiler.source>
+                <maven.compiler.target>1.8</maven.compiler.target>
+                <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+    </profiles>
+
+
+</project>

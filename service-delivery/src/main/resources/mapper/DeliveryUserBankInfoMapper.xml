@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.delivery.mapper.DeliveryUserBankInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.delivery.api.domain.DeliveryUserBankInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="bank" property="bank" jdbcType="VARCHAR" />
+    <result column="card_number" property="cardNumber" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="delivery_user_id" property="deliveryUserId" jdbcType="BIGINT" />
+  </resultMap>
+
+</mapper>

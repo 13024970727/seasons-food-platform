@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.ShopGoodsOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.ShopGoodsOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_base_info_id" property="shopBaseInfoId" jdbcType="BIGINT" />
+    <result column="user_goods_order_id" property="userGoodsOrderId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="rebate_money" property="rebateMoney" jdbcType="DECIMAL" />
+    <result column="settle_money" property="settleMoney" jdbcType="DECIMAL" />
+  </resultMap>
+
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.GoodsDeviantMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.GoodsDeviant" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="deviant_statu_name" property="deviantStatuName" jdbcType="VARCHAR" />
+    <result column="platform_duty_money" property="platformDutyMoney" jdbcType="DECIMAL" />
+    <result column="delivery_duty_money" property="deliveryDutyMoney" jdbcType="DECIMAL" />
+    <result column="user_duty_money" property="userDutyMoney" jdbcType="DECIMAL" />
+    <result column="shop_duty_money" property="shopDutyMoney" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="user_view" property="userView" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

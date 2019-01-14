@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.admin.mapper.SysUserMapper">
+    
+    <select id="findByName" parameterType="java.lang.String" resultType="com.seasonsfood.mall.admin.api.domain.SysUser">
+        SELECT *
+        FROM sys_user
+        WHERE username = #{userName}
+
+    </select>
+
+    <select id="findById" parameterType="java.lang.Long" resultType="com.seasonsfood.mall.admin.api.domain.SysUser">
+        SELECT *
+        FROM sys_user
+        WHERE id = #{id}
+
+    </select>
+
+    <select id="findByConditionNoOrg" parameterType="com.seasonsfood.mall.admin.api.model.UserRequest" resultType="com.seasonsfood.mall.admin.api.domain.SysUser">
+        SELECT * FROM champion_oa.sys_user AS u
+        <where>
+            <if test="username != '' and username != null">
+                u.username like CONCAT('%', #{username}, '%')
+            </if>
+
+            <if test="name != '' and name != null">
+                and u.nickname like "%"#{name}"%"
+            </if>
+
+            <if test="lock == 1">
+                and u.locked = 1
+            </if>
+            <if test="lock == 2">
+                and u.locked = 0
+            </if>
+
+            AND u.is_delete=0
+        </where>
+
+    </select>
+
+    <select id="findByCondition" parameterType="com.seasonsfood.mall.admin.api.model.UserRequest" resultType="com.seasonsfood.mall.admin.api.domain.SysUser">
+        SELECT
+        o.sys_organization_id,
+        u.id,
+        u.username,
+        u.`password`,
+        u.salt,
+        u.role_ids,
+        u.locked,
+        u.phone,
+        u.avatar,
+        u.nickname,
+        u.is_delete,
+        u.create_time,
+        FROM
+        champion_oa.sys_user AS u
+        LEFT JOIN champion_oa.sys_organization_has_sys_user AS o ON o.sys_user_id = u.id
+        <where>
+
+            <if test="username != '' and username != null">
+                u.username like CONCAT('%', #{username}, '%')
+            </if>
+
+            <if test="name != '' and name != null">
+                and u.nickname like "%"#{name}"%"
+            </if>
+
+            <if test="orgId != 0 and orgId != null">
+                and o.sys_organization_id = #{orgId}
+            </if>
+
+            <if test="lock == 1">
+                and u.locked = 1
+            </if>
+            <if test="lock == 2">
+                and u.locked = 0
+            </if>
+
+            <if test="org == 1">
+                and o.sys_organization_id IS NOT NULL
+            </if>
+            <if test="org == 2">
+                and o.sys_organization_id IS NULL
+            </if>
+
+            AND u.is_delete=0
+        </where>
+
+    </select>
+
+    <select id="findByOrgId" parameterType="java.lang.Long" resultType="com.seasonsfood.mall.admin.api.domain.SysUser">
+        SELECT *
+        FROM
+        sys_user AS u
+        INNER JOIN sys_organization_has_sys_user AS o ON o.sys_user_id = u.id
+        WHERE
+        o.sys_organization_id = #{orgId} AND u.is_delete = 0
+
+    </select>
+
+</mapper>

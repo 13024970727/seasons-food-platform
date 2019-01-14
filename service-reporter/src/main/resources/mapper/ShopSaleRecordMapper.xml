@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.reporter.mapper.ShopSaleRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.reporter.api.domain.ShopSaleRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_base_info_id" property="shopBaseInfoId" jdbcType="BIGINT" />
+    <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
+    <result column="order_number" property="orderNumber" jdbcType="INTEGER" />
+    <result column="record_time" property="recordTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="platform_total_sale" property="platformTotalSale" jdbcType="DECIMAL" />
+    <result column="sale_rate" property="saleRate" jdbcType="DECIMAL" />
+    <result column="moth_shop_total_sale" property="mothShopTotalSale" jdbcType="DECIMAL" />
+    <result column="month_platform_total_sale" property="monthPlatformTotalSale" jdbcType="DECIMAL" />
+  </resultMap>
+
+</mapper>

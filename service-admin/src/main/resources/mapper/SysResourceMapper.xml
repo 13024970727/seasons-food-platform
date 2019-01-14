@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.admin.mapper.SysResourceMapper">
+
+    <select id="findRootMenus" parameterType="java.lang.Long" resultType="com.seasonsfood.mall.admin.api.domain.SysResource">
+        SELECT *
+        FROM
+            sys_role
+            INNER JOIN sys_role_has_sys_resource ON sys_role_has_sys_resource.sys_role_id = sys_role.id
+            INNER JOIN sys_user_has_sys_role ON sys_user_has_sys_role.sys_role_id = sys_role.id
+            INNER JOIN sys_resource ON sys_role_has_sys_resource.sys_resource_id = sys_resource.id
+        WHERE
+            sys_resource.parent_id = 1 AND
+            sys_user_has_sys_role.sys_user_id = #{uid}
+        ORDER BY sys_resource.priority DESC
+    </select>
+    <select id="findMenusByUserId" parameterType="java.lang.Long" resultType="com.seasonsfood.mall.admin.api.domain.SysResource">
+        SELECT *
+        FROM champion_oa.sys_resource
+        where id in (SELECT sys_resource_id
+                     FROM champion_oa.sys_role_has_sys_resource
+                     where sys_role_id = (SELECT sys_role_id
+                                          FROM champion_oa.sys_user_has_sys_role
+                                          where sys_user_id =#{userId}))
+        ORDER BY priority
+
+    </select>
+
+</mapper>

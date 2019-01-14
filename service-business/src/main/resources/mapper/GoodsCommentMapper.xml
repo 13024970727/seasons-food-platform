@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.GoodsCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.GoodsComment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="SMALLINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+</mapper>

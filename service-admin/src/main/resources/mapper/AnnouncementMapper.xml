@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.admin.mapper.AnnouncementMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.admin.api.domain.Announcement" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="announce_type" property="announceType" jdbcType="VARCHAR" />
+    <result column="annount_time" property="annountTime" jdbcType="TIMESTAMP" />
+    <result column="review_picture" property="reviewPicture" jdbcType="VARCHAR" />
+    <result column="sort_number" property="sortNumber" jdbcType="SMALLINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

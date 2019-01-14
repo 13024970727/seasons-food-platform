@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.delivery.mapper.DeliveryWithdrawRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.delivery.api.domain.DeliveryWithdrawRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="delivery_user_id" property="deliveryUserId" jdbcType="BIGINT" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+    <result column="change_after" property="changeAfter" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="is_transfer" property="isTransfer" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="account_from" property="accountFrom" jdbcType="TINYINT" />
+    <result column="account_name" property="accountName" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

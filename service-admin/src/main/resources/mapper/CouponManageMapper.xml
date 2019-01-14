@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seasonsfood.mall.admin.mapper.CouponManageMapper">
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.admin.api.domain.CouponManage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
+    <result column="use_start_time" jdbcType="TIMESTAMP" property="useStartTime" />
+    <result column="use_end_time" jdbcType="TIMESTAMP" property="useEndTime" />
+    <result column="coupon_type" jdbcType="TINYINT" property="couponType" />
+    <result column="over_limit" jdbcType="DECIMAL" property="overLimit" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="is_use" jdbcType="TINYINT" property="isUse" />
+    <result column="limit_number" jdbcType="INTEGER" property="limitNumber" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+</mapper>

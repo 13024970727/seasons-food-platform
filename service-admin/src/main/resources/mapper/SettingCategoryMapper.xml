@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.admin.mapper.SettingCategoryMapper">
+    <resultMap id="BaseResultMap" type="com.seasonsfood.mall.admin.api.domain.SettingCategory">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="category_code" property="categoryCode" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="parent_ids" property="parentIds" jdbcType="VARCHAR"/>
+        <result column="priority" property="priority" jdbcType="INTEGER"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM sys_setting_category
+        WHERE category_code = #{code}
+     </select>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.ShopBaseInfoMapper">
+    <select id="findShopBaseInfoByUserId" parameterType="java.lang.Long"
+            resultType="com.seasonsfood.mall.business.api.domain.ShopBaseInfo">
+SELECT * FROM shop_base_info where id = (SELECT shop_base_info_id FROM shop_base_info_has_shop_user where shop_user_id =#{shopId})
+FOR UPDATE
+  </select>
+
+
+    <select id="withdrawMoney" resultType="java.lang.Integer">
+update shop_base_info set account= account- #{money} where id = #{shopBaseId}
+    </select>
+</mapper>

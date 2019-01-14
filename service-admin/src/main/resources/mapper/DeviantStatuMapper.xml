@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.admin.mapper.DeviantStatuMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.admin.api.domain.DeviantStatu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="divant_name" property="divantName" jdbcType="VARCHAR" />
+    <result column="is_platform_duty" property="isPlatformDuty" jdbcType="TINYINT" />
+    <result column="is_user_duty" property="isUserDuty" jdbcType="TINYINT" />
+    <result column="is_delivery_duty" property="isDeliveryDuty" jdbcType="TINYINT" />
+    <result column="is_shop_duty" property="isShopDuty" jdbcType="TINYINT" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="user_view" property="userView" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

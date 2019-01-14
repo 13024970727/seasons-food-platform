@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.UserGoodsOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.UserGoodsOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="font_user_id" property="fontUserId" jdbcType="BIGINT" />
+    <result column="delivery_user_id" property="deliveryUserId" jdbcType="BIGINT" />
+    <result column="total_pay" property="totalPay" jdbcType="DECIMAL" />
+    <result column="order_time" property="orderTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="order_from" property="orderFrom" jdbcType="SMALLINT" />
+    <result column="delivery_picture" property="deliveryPicture" jdbcType="VARCHAR" />
+    <result column="delivery_sort" property="deliverySort" jdbcType="SMALLINT" />
+    <result column="delivery_group" property="deliveryGroup" jdbcType="TINYINT" />
+    <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
+    <result column="dlivery_address" property="dliveryAddress" jdbcType="VARCHAR" />
+    <result column="delivery_fee" property="deliveryFee" jdbcType="DECIMAL" />
+    <result column="delivery_extra_fee" property="deliveryExtraFee" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="pay_type" property="payType" jdbcType="TINYINT" />
+    <result column="deviant_rate" property="deviantRate" jdbcType="DECIMAL" />
+    <result column="tiller_user_id" property="tillerUserId" jdbcType="BIGINT" />
+    <result column="address_id" property="addressId" jdbcType="BIGINT" />
+  </resultMap>
+
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.MarketCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.MarketCategory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="market_name" property="marketName" jdbcType="VARCHAR" />
+    <result column="image_url" property="imageUrl" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="sort_number" property="sortNumber" jdbcType="SMALLINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

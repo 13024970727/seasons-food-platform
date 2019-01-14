@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seasonsfood.mall.reporter.mapper.DeviantStatisticsRecordMapper">
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.reporter.api.domain.DeviantStatisticsRecord">
+    <id column="deviant_statu_id" jdbcType="BIGINT" property="deviantStatuId" />
+    <id column="record_time" jdbcType="TIMESTAMP" property="recordTime" />
+    <result column="deviant_goods_numebr" jdbcType="INTEGER" property="deviantGoodsNumebr" />
+    <result column="deviant_order_number" jdbcType="INTEGER" property="deviantOrderNumber" />
+    <result column="normal_order_number" jdbcType="INTEGER" property="normalOrderNumber" />
+    <result column="deviant_rate" jdbcType="DECIMAL" property="deviantRate" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.admin.mapper.TillerRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.admin.api.domain.TillerRecord" >
+    <id column="sys_user_id" property="sysUserId" jdbcType="BIGINT" />
+    <id column="record_time" property="recordTime" jdbcType="TIMESTAMP" />
+    <result column="tiller_number" property="tillerNumber" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="efficient" property="efficient" jdbcType="DECIMAL" />
+    <result column="tiller_order_value" property="tillerOrderValue" jdbcType="DECIMAL" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

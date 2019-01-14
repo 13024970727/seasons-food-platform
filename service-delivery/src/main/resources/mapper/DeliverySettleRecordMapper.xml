@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.delivery.mapper.DeliverySettleRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.delivery.api.domain.DeliverySettleRecord" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="delivery_day" property="deliveryDay" jdbcType="INTEGER" />
+    <result column="delivery_number" property="deliveryNumber" jdbcType="INTEGER" />
+    <result column="base_pay" property="basePay" jdbcType="DECIMAL" />
+    <result column="oil_subsidy" property="oilSubsidy" jdbcType="DECIMAL" />
+    <result column="delivery_subsidy" property="deliverySubsidy" jdbcType="DECIMAL" />
+    <result column="total_pay" property="totalPay" jdbcType="DECIMAL" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="delivery_user_id" property="deliveryUserId" jdbcType="BIGINT" />
+    <result column="record_time" property="recordTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+</mapper>

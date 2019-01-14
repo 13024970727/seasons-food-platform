@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.fontuser.mapper.FontUserAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.fontuser.api.domain.FontUserAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="detail_address" property="detailAddress" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="TINYINT" />
+    <result column="address_type" property="addressType" jdbcType="TINYINT" />
+    <result column="ladder_number" property="ladderNumber" jdbcType="VARCHAR" />
+    <result column="house_number" property="houseNumber" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="sort_number" property="sortNumber" jdbcType="SMALLINT" />
+    <result column="font_user_id" property="fontUserId" jdbcType="BIGINT" />
+    <result column="delivery_user_id" property="deliveryUserId" jdbcType="BIGINT" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+  </resultMap>
+
+</mapper>
