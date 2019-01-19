@@ -34,15 +34,15 @@ public class ChooseDiscountGoodsController {
     /**
      * 获得商品列表
      * @param goodName
-     * @param deliveryType 0已上架/1未上架
+     * @param onSale 0已上架/1未上架
      * @param pageNum
      * @param pageSize
      * @return
      */
     @PostMapping(value = "/goodList")
-    public JsonResponse findGoodList(String goodName,Short deliveryType,Integer pageNum,Integer pageSize) {
-        if(deliveryType==null){
-            deliveryType=0;
+    public JsonResponse findGoodList(String goodName,Short onSale,Integer pageNum,Integer pageSize) {
+        if(onSale==null){
+            onSale=0;
         }
         if (pageNum==null){
             pageNum=1;
