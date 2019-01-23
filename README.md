@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> e72e2920266ebc0c3f36df4323d38a730f1ae020
 # 项目所用技术
 
 - 使用spring boot使优化架构
@@ -57,3 +61,9 @@ return ResponseCode.SUCCESS;<br/>
 >3.controller层判断参数是否为空可以使用Assert
 >>Assert.hasText(username, "用户名不能为空");//返回
 Assert.hasText(username);
+<<<<<<< HEAD
+=======
+=======
+sdfdsvfdvdsvdsvdsv
+>>>>>>> 70feacde0ad8eec6091ed4395ddf8ada7064051d
+>>>>>>> e72e2920266ebc0c3f36df4323d38a730f1ae020
