@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>seasons-food-platform</artifactId>
-        <groupId>com.seasonsfood.mall</groupId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.seasonsfood.mall</groupId>
+    <artifactId>web-map</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>web-map</name>
     <description>web map</description>
 
-    <artifactId>web-map</artifactId>
-    <groupId>com.seasonsfood.mall</groupId>
-    <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <parent>
+        <groupId>com.seasonsfood.mall</groupId>
+        <artifactId>seasons-food-platform</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
     </properties>
 
-
     <dependencies>
+
         <!--common util-->
         <dependency>
             <groupId>com.seasonsfood.mall</groupId>
@@ -34,8 +34,10 @@
 
         <dependency>
             <groupId>com.seasonsfood.mall</groupId>
-            <artifactId>service-business-api</artifactId>
+            <artifactId>service-map-api</artifactId>
         </dependency>
+
+
 
         <!-- 使用Shiro认证 -->
         <dependency>
@@ -82,11 +84,6 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>com.seasonsfood.mall</groupId>
-            <artifactId>service-map-api</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -97,4 +94,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>

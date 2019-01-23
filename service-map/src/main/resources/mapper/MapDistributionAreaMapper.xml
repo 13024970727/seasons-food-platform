@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.servicemap.mapper.MapDistributionAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.servicemap.api.domain.MapDistributionArea" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="areaName" property="area_name" jdbcType="DOUBLE" />
+    <result column="sortRankId" property="sort_rank_id" jdbcType="INTEGER" />
+    <result column="stateId" property="state_id" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <select id="selectByState" resultMap="BaseResultMap">
+        SELECT * FROM map_distribution_area where state_id=1
+     </select>
+
+    <update id="startUsing" parameterType="java.lang.Integer">
+        update map_distribution_area set state_id=1 where id=#{id}
+    </update>
+
+    <update id="forbiddenAll">
+        update map_distribution_area set state_id=0 where state_id=1
+    </update>
+
+
+    <update id="forbiddenNowaday" parameterType="java.lang.Integer">
+         update map_distribution_area set state_id=0 where id=#{id}
+    </update>
+
+</mapper>
