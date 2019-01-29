@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #allmap{height:980px;width:100%;}
+        #r-result{width:100%;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=tQYXaX21xsx0p2DFOB1AFVFNzNoxHLQI"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <title>添加/删除覆盖物</title>
+</head>
+<body onload="getMap()">
+<div id="allmap"></div>
+<div id="r-result">
+    <input type="button" onclick="add_overlay();" value="添加覆盖物" />
+    <input type="button" onclick="remove_overlay();" value="删除覆盖物" />
+    <!--<input type="button" onclick="getMap();" value="获取地图范围" />-->
+</div>
+</body>
+<script>
+
+        function getMap() {
+            $.ajax({
+                url: 'http://192.168.1.101:8808/mapPen/getVertexCoordinates',
+                type: "POST",
+                data: "",
+                dataType: "json",
+                success: function backFunc(data) {
+                    data=eval(data);
+                   // alert('aaaaa');
+                    var  polygons = new Array();
+                    var i=0;
+                    var polygonMap=null;
+                    $.each(data.result, function (index, item) {
+                     //alert(index+"="+item)
+                        console.log("lng="+item.lng+"lat="+item.lat)
+
+                      polygonMap = new BMap.Point(item.lng,item.lat);
+                        polygons[i]=polygonMap;
+                        i++;
+
+                    });
+                    //console.log(polygons);
+                    buildMap(polygons)
+
+                }
+            });
+        };
+
+
+
+</script>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    function buildMap(polygons) {
+        var map = new BMap.Map("allmap");
+        var point = new BMap.Point(117.028714, 25.081959);
+        map.centerAndZoom(point, 13);
+        map.setCurrentCity("龙岩");          // 设置地图显示的城市 此项是必须设置的
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        //禁用双击放大
+        map.disableDoubleClickZoom();
+        //启用滚轮放大缩小
+        map.enableScrollWheelZoom();
+        //右键启用地图拖拽
+        var marker = new BMap.Marker(new BMap.Point(117.02445634320172, 25.06144452865387)); // 创建点
+        var polygon = new BMap.Polygon(polygons, {strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5});  //创建多边形
+        //添加覆盖物
+        function add_overlay(){
+            map.addOverlay(marker);//增加多边形
+            map.addOverlay(polygon);
+        }
+        //清除覆盖物
+        function remove_overlay(){
+            map.clearOverlays();
+        }
+        add_overlay();
+        var navigationControl = new BMap.NavigationControl({
+            // 靠左上角位置
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            // LARGE类型
+            type: BMAP_NAVIGATION_CONTROL_LARGE,
+            // 启用显示定位
+            enableGeolocation: true
+        });
+        map.addControl(navigationControl);
+        // 添加定位控件
+        var geolocationControl = new BMap.GeolocationControl();
+        geolocationControl.addEventListener("locationSuccess", function(e){
+            // 定位成功事件
+            var address = '';
+            address += e.addressComponent.province;
+            address += e.addressComponent.city;
+            address += e.addressComponent.district;
+            address += e.addressComponent.street;
+            address += e.addressComponent.streetNumber;
+            alert("当前定位地址为：" + address);
+        });
+        geolocationControl.addEventListener("locationError",function(e){
+            // 定位失败事件
+            alert(e.message);
+        });
+        map.addControl(geolocationControl);
+    }
+
+</script>
+</html>

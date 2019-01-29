@@ -1,23 +1,21 @@
 package com.seasonsfood.mall.web.map.web.controller.admin;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.seasonsfood.mall.servicemap.api.domain.MapDistributionArea;
-import com.seasonsfood.mall.servicemap.api.domain.MapPenCoordinate;
-import com.seasonsfood.mall.servicemap.api.result.MapVertexCoorDinates;
-import com.seasonsfood.mall.servicemap.api.service.MapDistributionAreaService;
-import com.seasonsfood.mall.servicemap.api.service.MapPenCoordinateService;
+import com.seasonsfood.mall.map.api.domain.MapDistributionArea;
+import com.seasonsfood.mall.map.api.domain.MapPenCoordinate;
+import com.seasonsfood.mall.map.api.result.MapVertexCoorDinates;
+import com.seasonsfood.mall.map.api.service.MapDistributionAreaService;
+import com.seasonsfood.mall.map.api.service.MapPenCoordinateService;
 import com.seasonsfood.mall.util.constant.ResponseCode;
 import com.seasonsfood.mall.util.model.JsonResponse;
 import com.seasonsfood.mall.util.util.ResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("mapPen")
 public class MapDistributionAreaController {
@@ -116,9 +114,11 @@ public class MapDistributionAreaController {
      */
     @PostMapping("add")
     public JsonResponse addMapPen(MapDistributionArea mapDistributionArea, List<MapPenCoordinate> mapPenCoordinateList) {
-
+        if ( mapDistributionArea.getAreaName()==null|| "".equals(mapDistributionArea.getAreaName())) {
+            return ResponseUtils.setJsonAndMsg(ResponseCode.NOT_NULL, "围栏名称不能为空", true);
+        }
+        mapDistributionArea.setStateId(0);
         try {
-            mapDistributionArea.setStateId(0);
             Boolean isSuccess = mapDistributionAreaService.saveMapPen(mapDistributionArea, mapPenCoordinateList);
             if (isSuccess) {
                 return ResponseUtils.setSuccess();

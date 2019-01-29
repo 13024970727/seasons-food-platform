@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.seasonsfood.mall.servicemap.mapper.MapDistributionAreaMapper" >
-  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.servicemap.api.domain.MapDistributionArea" >
+<mapper namespace="com.seasonsfood.mall.map.mapper.MapDistributionAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.map.api.domain.MapDistributionArea" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="areaName" property="area_name" jdbcType="DOUBLE" />
     <result column="sortRankId" property="sort_rank_id" jdbcType="INTEGER" />

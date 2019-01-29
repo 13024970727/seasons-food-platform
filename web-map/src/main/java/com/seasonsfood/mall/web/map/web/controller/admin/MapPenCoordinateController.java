@@ -1,9 +1,9 @@
 package com.seasonsfood.mall.web.map.web.controller.admin;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.seasonsfood.mall.servicemap.api.domain.MapPenCoordinate;
-import com.seasonsfood.mall.servicemap.api.result.MapVertexCoorDinates;
-import com.seasonsfood.mall.servicemap.api.service.MapPenCoordinateService;
+import com.seasonsfood.mall.map.api.domain.MapPenCoordinate;
+import com.seasonsfood.mall.map.api.result.MapVertexCoorDinates;
+import com.seasonsfood.mall.map.api.service.MapPenCoordinateService;
 import com.seasonsfood.mall.util.constant.ResponseCode;
 import com.seasonsfood.mall.util.model.JsonResponse;
 import com.seasonsfood.mall.util.util.ResponseUtils;
@@ -26,6 +26,7 @@ public class MapPenCoordinateController {
      */
     @RequestMapping("info")
     public JsonResponse getMapPenCoorDinateInfo(Integer id){
+
         if(id == null){
             return ResponseUtils.setJsonAndMsg(ResponseCode.NOT_NULL,"参数不能为空",true);
         }
