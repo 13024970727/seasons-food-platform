@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.GoodsCheckRecordMapper">
+    <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.GoodsCheckRecord">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="goods_id" property="goodsId" jdbcType="BIGINT"/>
+        <result column="responsible_personId" property="responsiblePersonId" jdbcType="BIGINT"/>
+        <result column="warehouse_entry_time" property="warehouseEntryTime" jdbcType="DATE"/>
+        <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT"/>
+        <result column="register_fee" property="registerFee" jdbcType="DECIMAL"/>
+        <result column="expiration_date" property="expirationDate" jdbcType="INTEGER"/>
+        <result column="quantity_in_stock" property="quantityInStock" jdbcType="DECIMAL"/>
+        <result column="unit_id" property="unitId" jdbcType="INTEGER"/>
+        <result column="state_id" property="stateId" jdbcType="TINYINT"/>
+        <result column="save_state_id" property="saveStateId" jdbcType="TINYINT"/>
+        <result column="deadline_warning" property="deadlineWarning" jdbcType="TINYINT"/>
+        <result column="quantity_warning" property="quantityWarning" jdbcType="DECIMAL"/>
+        <result column="date_in_produced" property="dateInProduced" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="selectByGoodsId" parameterType="java.lang.Long"
+            resultMap="BaseResultMap">
+select id,quantity_in_stock,quantity_warning from  goods_check_record where goods_id=#{goodsId} and quantity_in_stock !=0 ORDER BY date_in_produced asc
+  </select>
+
+
+    <select id="selectById" parameterType="java.lang.Long"
+            resultMap="BaseResultMap">
+select id,quantity_in_stock,quantity_warning from  goods_check_record where id=#{id}
+  </select>
+
+    <select id="selectGoodsInfo" parameterType="java.lang.Long"
+            resultType="com.seasonsfood.mall.business.api.model.GoodsInfo">
+  select gc.category_name,s.shop_name,g.goods_name from
+goods_category_has_goods c join goods g on id=c.goods_id join shop_base_info s on  c.shop_base_info_id =s.id
+join goods_category gc on gc.id= goods_category_id where c.goods_id=#{goodsId}
+</select>
+    <select id="findSysUserName" parameterType="java.lang.Long" resultType="java.lang.String">
+    SELECT username
+    FROM sys_user
+    WHERE id = #{id}
+</select>
+    <select id="findSysUserId" parameterType="java.lang.String" resultType="java.lang.Long">
+    SELECT id
+    FROM sys_user
+    WHERE username = #{sysUserName}
+</select>
+
+</mapper>

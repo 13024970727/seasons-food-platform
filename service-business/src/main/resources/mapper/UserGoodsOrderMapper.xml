@@ -13,7 +13,6 @@
     <result column="delivery_picture" property="deliveryPicture" jdbcType="VARCHAR" />
     <result column="delivery_sort" property="deliverySort" jdbcType="SMALLINT" />
     <result column="delivery_group" property="deliveryGroup" jdbcType="TINYINT" />
-    <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
     <result column="dlivery_address" property="dliveryAddress" jdbcType="VARCHAR" />
     <result column="delivery_fee" property="deliveryFee" jdbcType="DECIMAL" />
     <result column="delivery_extra_fee" property="deliveryExtraFee" jdbcType="DECIMAL" />
@@ -21,7 +20,16 @@
     <result column="pay_type" property="payType" jdbcType="TINYINT" />
     <result column="deviant_rate" property="deviantRate" jdbcType="DECIMAL" />
     <result column="tiller_user_id" property="tillerUserId" jdbcType="BIGINT" />
-    <result column="address_id" property="addressId" jdbcType="BIGINT" />
+    <result column="abnomal" property="tillerUserId" jdbcType="TINYINT" />
+    <result column="coupon_fee" property="addressId" jdbcType="DECIMAL" />
+    <result column="delivery_time" property="tillerUserId" jdbcType="DATE" />
+    <result column="receive_time" property="addressId" jdbcType="DATE" />
+    <result column="confirm_time" property="tillerUserId" jdbcType="DATE" />
+    <result column="return_time" property="addressId" jdbcType="DATE" />
+    <result column="coupon_id" property="tillerUserId" jdbcType="BIGINT" />
+    <result column="order_final_pay" property="addressId" jdbcType="DECIMAL" />
+    <result column="show_status" property="addressId" jdbcType="TINYINT" />
+
   </resultMap>
 
 </mapper>

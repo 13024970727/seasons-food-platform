@@ -32,11 +32,11 @@ public class GoodsMeteringUnitServiceImpl extends BaseServiceImpl<GoodsMeteringU
         }
         if (null == stateId) {
             stateId = 1;
-            criteria.andEqualTo("stateId", stateId);
-        } else {
-            criteria.andEqualTo("stateId", stateId);
         }
+        criteria.andEqualTo("stateId", stateId);
         PageHelper.startPage(pageNum, pageSize);
+        //可根据要查找的字段进行查找
+        //example.selectProperties("");
         PageInfo<GoodsMeteringUnit> pageInfo = new PageInfo<>(goodsMeteringUnitMapper.selectByExample(example));
         return new ListResponse(pageInfo);
     }

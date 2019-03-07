@@ -14,11 +14,5 @@
     </resultMap>
 
 
-    <select id="selectVillageListByLngAndLat" resultMap="BaseResultMap">
-select
- village_name,province,city,district,address from map_village order by ACOS(SIN((#{lat}
- * 3.1415) / 180 ) *SIN((lat * 3.1415) / 180 ) +COS((#{lat}
- * 3.1415) / 180 ) * COS((lat * 3.1415) / 180 ) *COS((#{lng}
- * 3.1415) / 180 - (lng * 3.1415) / 180 ) ) * 6380  asc limit #{pageLimit},#{pageSize}
-     </select>
+
 </mapper>

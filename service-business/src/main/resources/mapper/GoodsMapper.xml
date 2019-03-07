@@ -1,7 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.seasonsfood.mall.business.mapper.GoodsMapper">
+    <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.Goods" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="sku" property="sku" jdbcType="VARCHAR" />
+        <result column="goods_Name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="current_price" property="currentPrice" jdbcType="DECIMAL" />
+        <result column="change_price" property="changePrice" jdbcType="DECIMAL" />
+        <result column="unit_number" property="unitNumber" jdbcType="DECIMAL" />
+        <result column="unit_specification" property="unitSpecification" jdbcType="VARCHAR" />
+
+        <result column="is_custom" property="isCustom" jdbcType="TINYINT" />
+        <result column="stock_quantity" property="stockQuantity" jdbcType="TINYINT" />
+        <result column="warn_quantity" property="warnQuantity" jdbcType="TINYINT" />
+        <result column="sale_quantity" property="saleQuantity" jdbcType="TINYINT" />
+        <result column="daily_quantity" property="dailyQuantity" jdbcType="TINYINT" />
+        <result column="extral_qelivery_fee" property="extralDeliveryFee" jdbcType="DECIMAL" />
+        <result column="rebate" property="rebate" jdbcType="DECIMAL" />
+
+        <result column="delivery_type" property="deliveryType" jdbcType="SMALLINT" />
+        <result column="on_sale" property="onSale" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+        <result column="weight_Params" property="weightParams" jdbcType="DECIMAL" />
+        <result column="sort_number" property="sortNumber" jdbcType="SMALLINT" />
+    </resultMap>
+
     <update id="updateAllGoodsPrice">
       update goods set current_price=change_price
     </update>
+    <select id="selectGoodsName"  parameterType="java.lang.Long" resultType="com.seasonsfood.mall.business.api.domain.Goods">
+        select goods_name from goods where id=#{goodsId}
+    </select>
 </mapper>

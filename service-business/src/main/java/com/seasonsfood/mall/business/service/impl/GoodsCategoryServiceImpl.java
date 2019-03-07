@@ -6,7 +6,6 @@ import com.seasonsfood.mall.business.api.service.GoodsCategoryService;
 import com.seasonsfood.mall.business.mapper.GoodsCategoryMapper;
 import com.seasonsfood.mall.core.service.impl.BaseServiceImpl;
 import com.seasonsfood.mall.util.constant.ResponseCode;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

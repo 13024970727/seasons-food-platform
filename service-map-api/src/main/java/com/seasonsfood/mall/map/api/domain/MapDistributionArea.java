@@ -14,6 +14,7 @@ public class MapDistributionArea implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(generator = "JDBC")//此处加上注解
     private Integer id;
 
     /**

@@ -30,7 +30,10 @@
         <module>./common-config</module>
         <module>./common-util</module>
         <module>./common-core</module>
-
+        <!--配送服务-->
+        <module>./service-dispatch-api</module>
+        <module>./service-dispatch</module>
+        <module>./web-dispatch</module>
         <!--api-->
         <module>./service-admin-api</module>
         <module>./service-delivery-api</module>
@@ -123,8 +126,10 @@
         <service-map-api.version>1.0.0-SNAPSHOT</service-map-api.version>
         <!--营销工具-折扣活动api-->
         <service-marketing.version>1.0.0-SNAPSHOT</service-marketing.version>
-
-
+        <!--配送服务-->
+        <web-dispatch.version>1.0.0-SNAPSHOT</web-dispatch.version>
+        <service-dispatch.version>1.0.0-SNAPSHOT</service-dispatch.version>
+        <service-dispatch-api.version>1.0.0-SNAPSHOT</service-dispatch-api.version>
         <!--service-->
         <service-admin.version>1.0.0-SNAPSHOT</service-admin.version>
         <service-business.version>1.0.0-SNAPSHOT</service-business.version>
@@ -269,7 +274,24 @@
                 <artifactId>service-marketing-api</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
+            <!--配送服务-->
 
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>web-dispatch</artifactId>
+                <version>${web-dispatch.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-dispatch-api</artifactId>
+                <version>${service-dispatch-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.seasonsfood.mall</groupId>
+                <artifactId>service-dispatch</artifactId>
+                <version>${service-dispatch.version}</version>
+            </dependency>
 
             <!--service api-->
             <dependency>
@@ -552,7 +574,6 @@
                 <artifactId>sdk-dysmsapi</artifactId>
                 <version>${aliyun-sdk-sms.version}</version>
             </dependency>
-
 
             <!--quartz-->
             <dependency>

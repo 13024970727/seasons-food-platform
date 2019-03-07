@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.business.mapper.GoodsConsignmentWarehouseMapper">
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.business.api.domain.GoodsConsignmentWarehouse">
+    <id column="warehouse_id" property="warehouseId" jdbcType="INTEGER" />
+    <result column="warehouse_name" property="warehouseName" jdbcType="VARCHAR" />
+    <result column="state_id" property="stateId" jdbcType="TINYINT" />
+
+  </resultMap>
+
+
+</mapper>

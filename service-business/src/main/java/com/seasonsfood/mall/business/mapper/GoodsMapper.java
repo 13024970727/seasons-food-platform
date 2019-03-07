@@ -14,4 +14,7 @@ public interface GoodsMapper extends Mapper<Goods> {
     * @return void
     */
     void updateAllGoodsPrice();
+
+
+    Goods selectGoodsName(Long goodsId);
 }

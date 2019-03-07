@@ -93,31 +93,30 @@
             <artifactId>quartz</artifactId>
         </dependency>
 
-
         <!--lcn-->
-        <!--<dependency>-->
-            <!--<groupId>com.codingapi</groupId>-->
-            <!--<artifactId>tx-client</artifactId>-->
-        <!--</dependency>-->
+      <!--  <dependency>
+            <groupId>com.codingapi</groupId>
+            <artifactId>tx-client</artifactId>
+      </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.codingapi</groupId>-->
-            <!--<artifactId>tx-plugins-db</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.codingapi</groupId>
+            <artifactId>tx-plugins-db</artifactId>
+   </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.codingapi</groupId>-->
-            <!--<artifactId>transaction-dubbo</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.codingapi</groupId>
+            <artifactId>transaction-dubbo</artifactId>
+        </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.codingapi</groupId>-->
-            <!--<artifactId>transaction-motan</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+           <groupId>com.codingapi</groupId>
+            <artifactId>transaction-motan</artifactId>
+       </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.codingapi</groupId>-->
-            <!--<artifactId>transaction-springcloud</artifactId>
+        <dependency>
+            <groupId>com.codingapi</groupId>
+            <artifactId>transaction-springcloud</artifactId>
         </dependency>-->
 
     </dependencies>

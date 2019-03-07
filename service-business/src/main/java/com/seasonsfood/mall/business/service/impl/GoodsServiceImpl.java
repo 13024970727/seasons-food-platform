@@ -11,7 +11,6 @@ import com.seasonsfood.mall.business.mapper.GoodsMapper;
 import com.seasonsfood.mall.core.service.impl.BaseServiceImpl;
 import com.seasonsfood.mall.util.constant.ResponseCode;
 import com.seasonsfood.mall.util.exception.BizException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

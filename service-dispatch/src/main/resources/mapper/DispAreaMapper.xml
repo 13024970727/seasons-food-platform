@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.service.dispatch.mapper.DispAreaMapper">
+    <resultMap id="BaseResultMap" type="com.seasonsfood.mall.service.dispatch.api.domain.DispArea">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="areaName" property="area_name" jdbcType="DOUBLE"/>
+        <result column="areaType" property="area_type" jdbcType="TINYINT"/>
+        <result column="parentId" property="parent_id" jdbcType="BIGINT"/>
+        <result column="parentIds" property="parent_ids" jdbcType="VARCHAR"/>
+        <result column="sortNumber" property="sortNumber" jdbcType="INTEGER"/>
+        <result column="childAreaTotalNum" property="child_area_total_num" jdbcType="INTEGER"/>
+        <result column="currentAreaRegisterUserNum" property="current_area_register_user_num" jdbcType="INTEGER"/>
+        <result column="isHasDisp" property="is_has_disp" jdbcType="TINYINT"/>
+        <result column="createTime" property="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.service.dispatch.mapper.DispCircuitRecordImageMapper">
+    <resultMap id="BaseResultMap" type="com.seasonsfood.mall.service.dispatch.api.domain.DispCircuitRecordImage" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="circuitName" property="disp_image_name " jdbcType="VARCHAR" />
+        <result column="dispImageDescr" property="disp_image_descr " jdbcType="VARCHAR" />
+        <result column="dispImagePath" property="disp_image_path " jdbcType="VARCHAR" />
+        <result column="dispCircuitRecordId" property="disp_circuit_record_id " jdbcType="BIGINT" />
+        <result column="is_del" property="isDel" jdbcType="TINYINT" />
+        <result column="createTime" property="createTime" jdbcType="DATE" />
+    </resultMap>
+
+    <!--select id="selectTodayDispCircuitRecord"   resultType="com.seasonsfood.mall.service.dispatch.api.result.TodayDispCircuitRecordList">
+      SELECT circuit_id,concat (GROUP_CONCAT(circuit_name)) circuit_name ,dispatch_name,SUM(order_total_num) order_total_num,SUM(order_total_money) order_total_money,SUM(disp_distance) disp_distance FROM
+     disp_circuit_record WHERE  create_time = #{time}
+     GROUP BY dispatch_id  ORDER BY dispatch_orderly,circuit_orderly
+    </select>
+
+    <select id="countDispCircuitRecord"   resultType="java.lang.Integer">
+       select count(t.counts) from
+    (select id,count(*) counts from disp_circuit_record WHERE  create_time = #{time} group by dispatch_id) t
+    </select-->
+</mapper>

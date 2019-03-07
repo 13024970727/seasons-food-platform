@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seasonsfood.mall.service.dispatch.mapper.DispSiteUnitMapper" >
+  <resultMap id="BaseResultMap" type="com.seasonsfood.mall.service.dispatch.api.domain.DispSiteUnit" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="siteUnitName" property="site_unit_name" jdbcType="DOUBLE" />
+    <result column="parentSiteId" property="parent_site_id" jdbcType="BIGINT" />
+    <result column="registerUserNum" property="register_user_num" jdbcType="INTEGER" />
+    <result column="buyUseNum" property="buy_use_num" jdbcType="INTEGER" />
+    <result column="isDel" property="is_del" jdbcType="TINYINT" />
+    <result column="isStart" property="is_start" jdbcType="TINYINT" />
+    <result column="createTime" property="create_time" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+
+</mapper>

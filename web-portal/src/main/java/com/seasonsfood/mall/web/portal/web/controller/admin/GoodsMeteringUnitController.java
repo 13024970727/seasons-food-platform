@@ -43,6 +43,11 @@ public class GoodsMeteringUnitController {
         try {
             Assert.notNull(goodsmeteringUnit.getUnitId(), "单位ID不能为空");
             Assert.hasText(goodsmeteringUnit.getUnitName(), "单位名称不能为空");
+            GoodsMeteringUnit goodsMeteringUnit1 = new GoodsMeteringUnit();
+            goodsMeteringUnit1.setUnitName(goodsmeteringUnit.getUnitName());
+            if (goodsmeteringUnitService.selectOne(goodsMeteringUnit1) != null) {
+                return ResponseUtils.setJsonAndMsg(ResponseCode.MODIFY_ERROR, "已存在该单位");
+            }
             goodsmeteringUnitService.updateSelective(goodsmeteringUnit);
             return ResponseUtils.setSuccess();
         } catch (NumberFormatException e) {
@@ -59,6 +64,9 @@ public class GoodsMeteringUnitController {
             Assert.hasText(goodsMeteringUnit.getUnitName(), "单位名称不能为空");
             if (goodsMeteringUnit.getStateId() == null) {
                 goodsMeteringUnit.setStateId((byte) 1);
+            }
+            if (goodsmeteringUnitService.selectOne(goodsMeteringUnit) != null) {
+                return ResponseUtils.setJsonAndMsg(ResponseCode.ADD_ERROR, "已存在该单位");
             }
             goodsmeteringUnitService.saveSelective(goodsMeteringUnit);
             return ResponseUtils.setSuccess();
