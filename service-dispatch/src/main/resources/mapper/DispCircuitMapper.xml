@@ -25,6 +25,7 @@
     <select id="countDispCircuit"   resultType="java.lang.Integer">
        select count(*) from disp_circuit WHERE  is_del=#{stateId}
     </select>
+    <!--更换配送员或者选择配送员（无配送员的订单）-->
     <update id="updateDelivery"   >
        update user_goods_order set delivery_user_id=#{dispatchId} , circuit_id=#{dispCircuitId} where id=#{orderId}
     </update>

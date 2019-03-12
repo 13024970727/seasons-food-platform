@@ -36,14 +36,17 @@ public class DispCircuitServiceImpl extends BaseServiceImpl<DispCircuit> impleme
     DispCircuitRelevanceSiteMapper dispCircuitRelevanceSiteMapper;
 
     /**
-     * 查看永久配送线路列表
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:53
+     * @methodExplain： 查看永久配送线路列表
      * @param pageNum
      * @param pageSize
      * @param stateId 是否是删除状态，0否，1是
-     * @return
+     * @return：com.seasonsfood.mall.util.model.ListResponse<com.seasonsfood.mall.service.dispatch.api.domain.DispCircuit>
      */
     @Override
     public ListResponse<DispCircuit> selectDispCircuitRecord(Integer pageNum, Integer pageSize,Integer stateId) {
+
         List<DispCircuit> dispCircuitList = dispCircuitMapper.selectDispCircuit(pageNum,pageSize,stateId);
         int count = dispCircuitMapper.countDispCircuit(stateId);
         int pageAll = 0;//总页数
@@ -54,18 +57,18 @@ public class DispCircuitServiceImpl extends BaseServiceImpl<DispCircuit> impleme
         }
         return new ListResponse(count, pageAll, pageNum, dispCircuitList);
     }
-
     /**
-     * jcw
-     * 修改当日配送顺序
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:53
+     * @methodExplain：修改当日配送顺序
      * @param dispCircuit 配送线路实体
-     * @return
+     * @return：com.seasonsfood.mall.util.constant.ResponseCode
      */
     @Override
     @TxTransaction(isStart = true)
     @Transactional(rollbackFor = Exception.class)
     public ResponseCode updateDispOrderly(List<DispCircuit> dispCircuit) {
+
      int succeed=0 ;
         for (int i = 0; i < dispCircuit.size(); i++) {
             Long dispatchId = dispCircuit.get(i).getDispatchId();//配送员ID
@@ -79,45 +82,18 @@ public class DispCircuitServiceImpl extends BaseServiceImpl<DispCircuit> impleme
     }
 
     /**
-     * jcw
-     * 区域管理
-     * 统计未分配配送员的订单数量
-     *
-     * @return
-     */
-    @Override
-    public int selectNoDeliveryNum() {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(new Date());
-        calendar.add(calendar.DATE, -1);//获取昨天时间
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String date = sdf.format(calendar.getTime());
-        Date time = null;
-        try {
-            time = sdf.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        UserGoodsOrder serGoodsOrder = new UserGoodsOrder();
-        serGoodsOrder.setDeliveryUserId(Long.valueOf(0));
-        serGoodsOrder.setOrderTime(time);
-        // int count = userGoodsOrderMapper.selectCount(serGoodsOrder);
-        return 1;
-    }
-
-    /**
-     * jcw
-     * 更换配送员
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:52
+     * @methodExplain：  更换配送员或者选择配送员（无配送员的订单）
      * @param deliveryUserIdAndOrderId 配送员ID , 订单ID
-     * @return
+     * @return：com.seasonsfood.mall.util.constant.ResponseCode
      */
     @Override
     @TxTransaction(isStart = true)
     @Transactional(rollbackFor = Exception.class)
     public ResponseCode updateDelivery(List<DeliveryUserIdAndOrderId> deliveryUserIdAndOrderId) {
+
         for (int i = 0; i < deliveryUserIdAndOrderId.size(); i++) {
-            System.out.println(deliveryUserIdAndOrderId.get(i).getDeliveryUserId());
             //查找订单小区的经纬度
             LngAndLat lngAndLat = dispSiteMapper.selectLngAndLat(deliveryUserIdAndOrderId.get(i).getOrderId());
             // 通过订单地点找出距离被选配送员所有地点中最近的地点

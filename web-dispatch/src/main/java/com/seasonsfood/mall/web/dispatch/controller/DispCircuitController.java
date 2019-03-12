@@ -1,14 +1,11 @@
 package com.seasonsfood.mall.web.dispatch.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.seasonsfood.mall.business.api.service.UserGoodsOrderService;
 import com.seasonsfood.mall.service.dispatch.api.domain.DispCircuit;
 import com.seasonsfood.mall.service.dispatch.api.param.*;
-import com.seasonsfood.mall.service.dispatch.api.result.LngAndLat;
 import com.seasonsfood.mall.service.dispatch.api.service.DispCircuitRecordService;
 import com.seasonsfood.mall.service.dispatch.api.service.DispCircuitRelevanceSiteService;
 import com.seasonsfood.mall.service.dispatch.api.service.DispCircuitService;
-import com.seasonsfood.mall.service.dispatch.api.service.DispSiteService;
 import com.seasonsfood.mall.util.constant.ResponseCode;
 import com.seasonsfood.mall.util.exception.BizException;
 import com.seasonsfood.mall.util.model.JsonResponse;
@@ -33,14 +30,16 @@ public class DispCircuitController {
     DispCircuitRelevanceSiteService dispCircuitRelevanceSiteService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /**jcw
-     * 创建配送员配送线路
-     *
-     * @param
-     * @return
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:44
+     * @methodExplain：创建配送员配送线路
+     * @param dispCircuit
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("createDistance")
     public JsonResponse createDistance(DispCircuit dispCircuit) {
+
         Assert.notNull(dispCircuit.getCircuitName(),"线路名称不能为空");
         Assert.notNull(dispCircuit.getDispatchName(),"配送员名称不能为空");
         Assert.notNull(dispCircuit.getCircuitOrderly(),"线路序号不能为空");
@@ -64,14 +63,16 @@ public class DispCircuitController {
         }
     }
     /**jcw
-     * 配送线路添加地点
-     *
-     * @param dispCircuitRelevanceSite
-     * @return
+     /**
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:43
+     * @methodExplain：配送线路添加地点
+     * @param dispCircuitRelevanceSite 地点经纬度
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("addDispCircuitRelevanceSite")
     public JsonResponse addDispCircuitRelevanceSite(@RequestBody DispCircuitRelevanceSiteList dispCircuitRelevanceSite)  {
-        System.out.println(dispCircuitRelevanceSite);
+
         if (dispCircuitRelevanceSite.getDispCircuitRelevanceSite() == null & !dispCircuitRelevanceSite.getDispCircuitRelevanceSite().isEmpty()) {
             return ResponseUtils.setJsonAndMsg(ResponseCode.NOT_NULL, "参数不能为空", true);
         }
@@ -89,16 +90,17 @@ public class DispCircuitController {
         }
     }
     /**
-     * jcw
-     * 查询今日配送线路列表
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:43
+     * @methodExplain：查询今日配送线路列表
      * @param pageNum
      * @param pageSize
-     * @param time     搜索时间
-     * @return
+     * @param time 搜索时间
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("selectTodayDispCircuitRecord")
     public JsonResponse selectTodayDispCircuitRecord(Integer pageNum, Integer pageSize, String time) {
+
         if (pageNum == null) {
             pageNum = 1;
         }
@@ -114,16 +116,17 @@ public class DispCircuitController {
     }
 
     /**
-     * jcw
-     * 查询永久配送线路列表
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:43
+     * @methodExplain：查询永久配送线路列表
      * @param pageNum
      * @param pageSize
-     * @param stateId  是否是删除状态，0否，1是
-     * @return
+     * @param stateId 是否是删除状态，0否，1是
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("selectDispCircuitRecord")
     public JsonResponse selectDispCircuitRecord(Integer pageNum, Integer pageSize, Integer stateId) {
+
         if (pageNum == null) {
             pageNum = 1;
         }
@@ -136,13 +139,12 @@ public class DispCircuitController {
         return ResponseUtils.setSuccess(dispCircuitService.selectDispCircuitRecord(pageNum, pageSize, stateId));
 
     }
-
     /**
-     * jcw
-     * 查询配送员当前位置
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:42
+     * @methodExplain：查询配送员当前位置
      * @param dispatchId 配送员id
-     * @return
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("selectCircuitLocation")
     public JsonResponse selectCircuitLocation(Long dispatchId) {
@@ -151,16 +153,16 @@ public class DispCircuitController {
         String time = df.format(new Date());// new Date()为获取当前系统时间
         return ResponseUtils.setSuccess(dispCircuitRecordService.selectCircuitLocation(dispatchId, time));
     }
-
     /**
-     * jcw
-     * 修改配送员当日配送顺序
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:42
+     * @methodExplain：修改配送员当日配送顺序
      * @param dispCircuitRecord
-     * @return
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("updateTodayDispOrderly")
     public JsonResponse updateTodayDispOrderly(@RequestBody DispCircuitRecordList dispCircuitRecord) {
+
         try {
             if (dispCircuitRecord.getDispCircuitRecord() == null & !dispCircuitRecord.getDispCircuitRecord().isEmpty()) {
                 return ResponseUtils.setJsonAndMsg(ResponseCode.NOT_NULL, "参数不能为空", true);
@@ -181,14 +183,15 @@ public class DispCircuitController {
         }
     }
     /**
-     * jcw
-     * 修改配送员永久配送顺序
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:42
+     * @methodExplain：修改配送员永久配送顺序
      * @param dispCircuit
-     * @return
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("updateDispOrderly")
     public JsonResponse updateDispOrderly(@RequestBody DispCircuitList dispCircuit) {
+
         try {
             if (dispCircuit.getDispCircuit() == null & !dispCircuit.getDispCircuit().isEmpty()) {
                 return ResponseUtils.setJsonAndMsg(ResponseCode.NOT_NULL, "参数不能为空", true);
@@ -207,23 +210,26 @@ public class DispCircuitController {
         }
     }
     /**
-     * jcw
-     * 统计未分配配送员的订单数量
-     * @return
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:41
+     * @methodExplain：统计未分配配送员的订单数量
+     * @param
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("selectNoDelivery")
     public JsonResponse selectNoDelivery() {
-        return ResponseUtils.setSuccess(dispCircuitService.selectNoDeliveryNum());
+        return ResponseUtils.setSuccess(dispCircuitRecordService.selectNoDeliveryNum());
     }
     /**
-     * jcw
-     * 选择配送员或者更换配送员
-     *
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:41
+     * @methodExplain：选择配送员或者更换配送员
      * @param deliveryUserIdAndOrderIdList
-     * @return
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("updateDelivery")
     public JsonResponse updateDelivery(@RequestBody DeliveryUserIdAndOrderIdList deliveryUserIdAndOrderIdList) {
+
         System.out.println(deliveryUserIdAndOrderIdList);
         try {
             if (deliveryUserIdAndOrderIdList.getDeliveryUserIdAndOrderIdList() == null & !deliveryUserIdAndOrderIdList.getDeliveryUserIdAndOrderIdList().isEmpty()) {
@@ -242,15 +248,16 @@ public class DispCircuitController {
             return ResponseUtils.setToJson(ResponseCode.MODIFY_ERROR);
         }
     }
-
     /**
-     * jcw
-     * 查看配送员今日配送的订单并通过订单离起点的距离排序
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:40
+     * @methodExplain：查看配送员通过订单今日配送的订单并离起点的距离排序
      * @param selectOrderByDelivery 配送员id，起点经纬度
-     * @return
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
     @PostMapping("seelectOrderByDelivery")
     public JsonResponse seelectOrderByDelivery(SelectOrderByDelivery selectOrderByDelivery) {
+
         Assert.notNull(selectOrderByDelivery.getDispatchId(),"配送员不能为空");
         Assert.notNull(selectOrderByDelivery.getLng(),"起点经度不能为空");
         Assert.notNull(selectOrderByDelivery.getLat(),"起点纬度不能为空");
@@ -261,6 +268,24 @@ public class DispCircuitController {
           selectOrderByDelivery.setPageSize(3);
       }
         return ResponseUtils.setSuccess( dispCircuitRecordService.selectOrderByDelivery(selectOrderByDelivery));
+    }
+
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/8-9:50
+     * @methodExplain：查看今日配送订单列表
+     * @param paramDeliveryOrederInfo  用户 用户id，配送员，配送状态，分配状态，开始时间，结束时间
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
+     */
+    @PostMapping("selectDeliveryOrederInfo")
+    public JsonResponse selectDeliveryOrederInfo(ParamDeliveryOrederInfo paramDeliveryOrederInfo) {
+        if (paramDeliveryOrederInfo.getPageNum()==null){
+            paramDeliveryOrederInfo.setPageNum(1);
+        }
+        if (paramDeliveryOrederInfo.getPageSize()==null){
+            paramDeliveryOrederInfo.setPageSize(3);
+        }
+        return ResponseUtils.setSuccess( dispCircuitRecordService.selectDeliveryOrederInfo(paramDeliveryOrederInfo));
     }
 
 }

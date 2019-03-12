@@ -1,8 +1,7 @@
 package com.seasonsfood.mall.business.mapper;
 
 import com.seasonsfood.mall.business.api.domain.UserGoodsOrder;
-import com.seasonsfood.mall.service.dispatch.api.result.LngAndLat;
-import org.apache.ibatis.annotations.Param;
+
 import tk.mybatis.mapper.common.Mapper;
 
 /**

@@ -17,9 +17,16 @@ import java.util.List;
 public class DispCircuitRelevanceSiteImpl extends BaseServiceImpl<DispCircuitRelevanceSite> implements DispCircuitRelevanceSiteService {
     @Resource
     DispCircuitRelevanceSiteMapper dispCircuitRelevanceSiteMapper;
-
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:50
+     * @methodExplain： 配送线路添加地点
+     * @param dispCircuitRelevanceSite
+     * @return：
+     */
     @Override
     public Integer addDispCircuitRelevanceSite(List<DispCircuitRelevanceSite> dispCircuitRelevanceSite) {
+
         Integer success=null;
         for (int i = 0; i < dispCircuitRelevanceSite.size(); i++) {
             if (dispCircuitRelevanceSite.get(i).getIsStart() == null) {

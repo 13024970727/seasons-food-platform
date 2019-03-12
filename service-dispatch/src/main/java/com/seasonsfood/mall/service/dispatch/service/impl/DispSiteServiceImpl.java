@@ -31,10 +31,4 @@ public class DispSiteServiceImpl extends BaseServiceImpl<DispSite> implements Di
     @Resource
     DispCircuitRelevanceSiteMapper dispCircuitRelevanceSiteMapper;
 
-    @Override
-    public LngAndLat selectLngAndLat() {
-        LngAndLat lngAndLat=dispSiteMapper.selectLngAndLat((long) 1000);
-        System.out.println(lngAndLat.getLng());
-        return lngAndLat;
-    }
 }

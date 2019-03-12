@@ -6,10 +6,12 @@ import com.seasonsfood.mall.service.dispatch.api.domain.DispCircuitRelevanceSite
 import java.util.List;
 
 public interface DispCircuitRelevanceSiteService extends BaseService<DispCircuitRelevanceSite> {
-    /**jcw
-     * 配送线路添加地点
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:50
+     * @methodExplain： 配送线路添加地点
      * @param dispCircuitRelevanceSite
-     * @return
+     * @return：
      */
     Integer addDispCircuitRelevanceSite(List<DispCircuitRelevanceSite> dispCircuitRelevanceSite);
 

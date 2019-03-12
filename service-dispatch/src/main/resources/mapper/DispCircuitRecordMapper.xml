@@ -1,41 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.seasonsfood.mall.service.dispatch.mapper.DispCuitcuitRecordMapper">
-    <resultMap id="BaseResultMap" type="com.seasonsfood.mall.service.dispatch.api.domain.DispCircuitRecord" >
-        <id column="id" property="id" jdbcType="BIGINT" />
-        <result column="circuit_name" property="circuitName" jdbcType="VARCHAR" />
-        <result column="circuit_id" property="circuitId" jdbcType="BIGINT" />
-        <result column="circuit_orderly" property="circuitOrderly" jdbcType="TINYINT" />
-        <result column="dispatch_orderly" property="dispatchOrderly" jdbcType="TINYINT" />
-        <result column="lng_lat_circuit" property="lngLatCircuit" jdbcType="VARCHAR" />
-        <result column="dispatch_id" property="dispatchId" jdbcType="BIGINT" />
-        <result column="dispatch_name" property="dispatchName" jdbcType="VARCHAR" />
-        <result column="disp_status" property="dispStatus" jdbcType="TINYINT" />
-        <result column="disp_start_time" property="dispStartTime" jdbcType="DATE" />
-        <result column="disp_end_time" property="dispEndTime" jdbcType="DATE" />
-        <result column="already_disp_num" property="alreadyDispNum" jdbcType="TINYINT" />
-        <result column="not_disp_num" property="notDispNum" jdbcType="TINYINT" />
-        <result column="circuit_alike" property="circuitAlike" jdbcType="TINYINT" />
-        <result column="order_total_num" property="orderTotalNum" jdbcType="TINYINT" />
-        <result column="order_total_money" property="orderTotalMoney" jdbcType="DECIMAL" />
-        <result column="disp_distance" property="disp_distance" jdbcType="TINYINT" />
-        <result column="disp_orderly" property="dispOrderly" jdbcType="TINYINT" />
-        <result column="is_del" property="isDel" jdbcType="TINYINT" />
-        <result column="create_time" property="createTime" jdbcType="DATE" />
+    <resultMap id="BaseResultMap" type="com.seasonsfood.mall.service.dispatch.api.domain.DispCircuitRecord">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="circuit_name" property="circuitName" jdbcType="VARCHAR"/>
+        <result column="circuit_id" property="circuitId" jdbcType="BIGINT"/>
+        <result column="circuit_orderly" property="circuitOrderly" jdbcType="TINYINT"/>
+        <result column="dispatch_orderly" property="dispatchOrderly" jdbcType="TINYINT"/>
+        <result column="lng_lat_circuit" property="lngLatCircuit" jdbcType="VARCHAR"/>
+        <result column="dispatch_id" property="dispatchId" jdbcType="BIGINT"/>
+        <result column="dispatch_name" property="dispatchName" jdbcType="VARCHAR"/>
+        <result column="disp_status" property="dispStatus" jdbcType="TINYINT"/>
+        <result column="disp_start_time" property="dispStartTime" jdbcType="DATE"/>
+        <result column="disp_end_time" property="dispEndTime" jdbcType="DATE"/>
+        <result column="already_disp_num" property="alreadyDispNum" jdbcType="TINYINT"/>
+        <result column="not_disp_num" property="notDispNum" jdbcType="TINYINT"/>
+        <result column="circuit_alike" property="circuitAlike" jdbcType="TINYINT"/>
+        <result column="order_total_num" property="orderTotalNum" jdbcType="TINYINT"/>
+        <result column="order_total_money" property="orderTotalMoney" jdbcType="DECIMAL"/>
+        <result column="disp_distance" property="disp_distance" jdbcType="TINYINT"/>
+        <result column="disp_orderly" property="dispOrderly" jdbcType="TINYINT"/>
+        <result column="is_del" property="isDel" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
     </resultMap>
     <!--临时配送列表信息-->
-    <select id="selectTodayDispCircuitRecord"   resultType="com.seasonsfood.mall.service.dispatch.api.result.TodayDispCircuitRecordList">
-      SELECT circuit_id,concat (GROUP_CONCAT(circuit_name)) circuit_name ,dispatch_name,SUM(order_total_num) order_total_num,
+    <select id="selectTodayDispCircuitRecord"
+            resultType="com.seasonsfood.mall.service.dispatch.api.result.TodayDispCircuitRecordList">
+      SELECT dispatch_id,circuit_id,concat (GROUP_CONCAT(circuit_name)) circuit_name ,dispatch_name,SUM(order_total_num) order_total_num,
       SUM(order_total_money) order_total_money,SUM(disp_distance) disp_distance FROM
      disp_circuit_record WHERE  create_time = #{time}
      GROUP BY dispatch_id  ORDER BY dispatch_orderly,circuit_orderly
     </select>
     <!--临时修改配送顺序-->
-    <update id="updateTodayDispOrderly" >
+    <update id="updateTodayDispOrderly">
      update disp_circuit_record set dispatch_orderly=#{dispOrderly} where  dispatch_id=#{dispatchId} and create_time = #{time}
     </update>
+
+    <!--查询未分配订单数量-->
+    <select id="selectNoDeliveryNum" resultType="java.lang.Integer">
+      SELECT count(*) from disp_circuit_record where dispatch_id =#{dispatchId} and to_days(create_time) = to_days(now())
+    </select>
     <!--查看配送员今日配送的订单并通过订单离起点的距离排序-->
-    <select id="selectOrderByDelivery"   resultType="com.seasonsfood.mall.service.dispatch.api.result.FontUserOrderInfo">
+    <select id="selectOrderByDelivery" resultType="com.seasonsfood.mall.service.dispatch.api.result.FontUserOrderInfo">
       select
 orderId,id,delivery_address from
 (select ds.lng,ds.lat,ugo.id orderId ,ugo.font_user_id id,ugo.delivery_address from disp_site ds
@@ -46,7 +52,44 @@ site order by ACOS(SIN((#{lat}
  * 3.1415) / 180 ) * COS((lat * 3.1415) / 180 ) *COS((#{lng}
  * 3.1415) / 180 - (lng * 3.1415) / 180 ) ) * 6380
     </select>
-    <select id="selectFontUserInfo"   resultType="com.seasonsfood.mall.service.dispatch.api.result.FontUserOrderInfo">
+    <select id="selectFontUserInfo" resultType="com.seasonsfood.mall.service.dispatch.api.result.FontUserOrderInfo">
       select username,phone from font_user where id=#{userId}
+    </select>
+
+    <select id="selectdispatchName" resultType="java.lang.String">
+      select username from font_user where id=#{deliveryUserId}
+    </select>
+    <!--配送列表-->
+    <select id="selectDeliveryOrederInfo" parameterType="com.seasonsfood.mall.service.dispatch.api.param.ParamDeliveryOrederInfo" resultType="com.seasonsfood.mall.service.dispatch.api.result.DeliveryOrederInfo">
+        SELECT id orderId,font_user_id id,delivery_user_id,delivery_area areaName,delivery_address address,status ,delivery_picture,receive_time FROM user_goods_order where 1=1
+        <if test="userId!=null">
+            and font_user_id=#{userId}
+        </if>
+        <if test="userName!=null">
+            and font_user_id=(SELECT id FROM font_user where username=#{userName})
+        </if>
+        <if test="dispatchName!=null">
+            and delivery_user_id=(SELECT id FROM sys_user where username=#{dispatchName})
+        </if>
+        <if test="dispatchState!=null and dispatchState=0">
+            and font_user_id=#{dispatchState}
+        </if>
+        <if test="dispatchState!=null and dispatchState=!0">
+            and font_user_id!=0
+        </if>
+        <if test="state!=null">
+            and status=#{state}
+        </if>
+        <if test="startTime!=null">
+            and create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null">
+            and create_time &lt;= #{endTime}
+        </if>
+        <!-->默认查出昨天的订单，今天配送<-->
+        <if test="startTime=null and endTime=null">
+            and DATEDIFF(ugo.create_time,NOW())=-1)
+        </if>
+        order by create_time desc
     </select>
 </mapper>

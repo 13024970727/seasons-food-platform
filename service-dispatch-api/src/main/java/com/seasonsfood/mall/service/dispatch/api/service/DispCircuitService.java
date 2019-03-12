@@ -8,34 +8,31 @@ import com.seasonsfood.mall.util.model.ListResponse;
 import java.util.List;
 
 public interface DispCircuitService extends BaseService<DispCircuit> {
-    /**jcw
-     * 修改当日配送顺序
-     * @param dispCircuit
-     * @return
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:50
+     * @methodExplain： 修改当日配送顺序
+     * @param
+     * @return：
      */
     ResponseCode updateDispOrderly(List<DispCircuit> dispCircuit);
     /**
-     * jcw
-     * 查询永久配送线路列表
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:49
+     * @methodExplain： 查询永久配送线路列表
+     * @param
+     * @return：
      */
     ListResponse<DispCircuit> selectDispCircuitRecord (Integer pageNum, Integer pageSize,Integer stateId);
 
 
-    /**jcw
-     * 区域管理
-     * 统计未分配配送员的订单数量
-     * @return
-     */
-   int selectNoDeliveryNum();
 
-
-    /**jcw
-     *更换配送员
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:48
+     * @methodExplain： 更换配送员
      * @param deliveryUserIdAndOrderId  配送员ID , 订单ID
-     * @return
+     * @return：
      */
     ResponseCode updateDelivery(List<DeliveryUserIdAndOrderId> deliveryUserIdAndOrderId);
 }

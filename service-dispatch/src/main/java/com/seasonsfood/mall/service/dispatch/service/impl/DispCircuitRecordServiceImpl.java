@@ -4,9 +4,12 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.codingapi.tx.annotation.TxTransaction;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.seasonsfood.mall.business.api.domain.UserGoodsOrder;
 import com.seasonsfood.mall.core.service.impl.BaseServiceImpl;
 import com.seasonsfood.mall.service.dispatch.api.domain.DispCircuitRecord;
+import com.seasonsfood.mall.service.dispatch.api.param.ParamDeliveryOrederInfo;
 import com.seasonsfood.mall.service.dispatch.api.param.SelectOrderByDelivery;
+import com.seasonsfood.mall.service.dispatch.api.result.DeliveryOrederInfo;
 import com.seasonsfood.mall.service.dispatch.api.result.FontUserOrderInfo;
 import com.seasonsfood.mall.service.dispatch.api.result.TodayDispCircuitRecordList;
 import com.seasonsfood.mall.service.dispatch.api.service.DispCircuitRecordService;
@@ -16,12 +19,16 @@ import com.seasonsfood.mall.util.model.ListResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
+
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+
 /**
-*@author jiangchengwei
-*@date: 2019/3/6-17:33
-*/
+ * @author jiangchengwei
+ * @date: 2019/3/6-17:33
+ */
 @Component
 @Service(interfaceClass = DispCircuitRecordService.class)
 public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRecord> implements DispCircuitRecordService {
@@ -29,12 +36,12 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
     DispCuitcuitRecordMapper dispCuitcuitRecordMapper;
 
     /**
-     * @author jiangchengwei
-     * @date: 2019/3/6-18:04
-     * @methodExplain：查询今日配送线路列表
      * @param pageNum
      * @param pageSize
      * @param time
+     * @author jiangchengwei
+     * @date: 2019/3/6-18:04
+     * @methodExplain：查询今日配送线路列表
      * @return：com.seasonsfood.mall.util.model.ListResponse<com.seasonsfood.mall.service.dispatch.api.result.TodayDispCircuitRecordList>
      */
     @Override
@@ -47,11 +54,11 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
     }
 
     /**
+     * @param dispatchId 配送员ID
+     * @param time       时间
      * @author jiangchengwei
      * @date: 2019/3/6-17:55
      * @methodExplain：查询配送员当前位置
-     * @param dispatchId 配送员ID
-     * @param time 时间
      * @return：java.lang.String
      */
     @Override
@@ -74,12 +81,13 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
         }
         return lngLatCircuit;
     }
+
     /**
+     * @param dispCircuitRecord
+     * @param time
      * @author jiangchengwei
      * @date: 2019/3/6-18:04
      * @methodExplain：修改当日配送顺序
-     * @param dispCircuitRecord
-     * @param time
      * @return：com.seasonsfood.mall.util.constant.ResponseCode
      */
     @Override
@@ -99,11 +107,25 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
         return ResponseCode.SUCCESS;
     }
 
+    @Override
+    public int selectNoDeliveryNum() {
+        /**
+         * @author jiangchengwei
+         * @date: 2019/3/11-10:52
+         * @methodExplain： 区域管理 统计未分配配送员的订单数量
+         * @param
+         * @return：int
+         */
+        long dispatchId = Long.valueOf(0);
+        int count = dispCuitcuitRecordMapper.selectNoDeliveryNum(dispatchId);
+        return count;
+    }
+
     /**
+     * @param selectOrderByDelivery 配送员id
      * @author jiangchengwei
      * @date: 2019/3/6-18:03
      * @methodExplain：查看配送员今日配送的订单并通过订单离起点的距离排序
-     * @param selectOrderByDelivery 配送员id
      * @return：com.seasonsfood.mall.util.model.ListResponse<com.seasonsfood.mall.service.dispatch.api.result.FontUserOrderInfo>
      */
     @Override
@@ -123,6 +145,43 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
             resultList.add(fontUserOrderInfo);
         }
         PageInfo pageInfo = new PageInfo(resultList);
+        return new ListResponse(pageInfo);
+    }
+
+    /**
+     * @param paramDeliveryOrederInfo 用户 用户id，配送员，配送状态，分配状态，开始时间，结束时间
+     * @author jiangchengwei
+     * @date: 2019/3/8-9:55
+     * @methodExplain：查看今日配送订单列表
+     * @return：com.seasonsfood.mall.util.model.ListResponse<com.seasonsfood.mall.service.dispatch.api.result.DeliveryOrederInfo>
+     */
+    @Override
+    public ListResponse<DeliveryOrederInfo> selectDeliveryOrederInfo(ParamDeliveryOrederInfo paramDeliveryOrederInfo) {
+        PageHelper.startPage(paramDeliveryOrederInfo.getPageNum(), paramDeliveryOrederInfo.getPageSize());
+        List<DeliveryOrederInfo> deliveryOrederInfoList = dispCuitcuitRecordMapper.selectDeliveryOrederInfo(paramDeliveryOrederInfo);
+        for (int i = 0; i < deliveryOrederInfoList.size(); i++) {
+            //查出用户的一些基本信息
+            FontUserOrderInfo userOrderInfo = dispCuitcuitRecordMapper.selectFontUserInfo(deliveryOrederInfoList.get(i).getId());
+            String dispatchName = dispCuitcuitRecordMapper.selectdispatchName(deliveryOrederInfoList.get(i).getDeliveryUserId());
+            deliveryOrederInfoList.get(i).setUserName(userOrderInfo.getUserName());//用户名字
+            deliveryOrederInfoList.get(i).setDispatchName(dispatchName);//配送员名字
+            if (deliveryOrederInfoList.get(i).getStatus() == 1) {
+                deliveryOrederInfoList.get(i).setState("代付款");
+            }
+            if (deliveryOrederInfoList.get(i).getStatus() == 2) {
+                deliveryOrederInfoList.get(i).setState("备货中");
+            }
+            if (deliveryOrederInfoList.get(i).getStatus() == 3) {
+                deliveryOrederInfoList.get(i).setState("待配送");
+            }
+            if (deliveryOrederInfoList.get(i).getStatus() == 4) {
+                deliveryOrederInfoList.get(i).setState("待收货");
+            }
+            if (deliveryOrederInfoList.get(i).getStatus() == 5) {
+                deliveryOrederInfoList.get(i).setState("待评价");
+            }
+        }
+        PageInfo pageInfo = new PageInfo(deliveryOrederInfoList);
         return new ListResponse(pageInfo);
     }
 }

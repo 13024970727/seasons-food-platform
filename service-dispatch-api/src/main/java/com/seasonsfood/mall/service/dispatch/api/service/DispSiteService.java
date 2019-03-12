@@ -20,6 +20,5 @@ public interface DispSiteService extends BaseService<DispSite> {
 //启用禁用
     ResponseCode enableDisable(DispSite dispSite);*/
 
-    LngAndLat selectLngAndLat( );
 
 }
