@@ -68,9 +68,9 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
             lngLatCircuit = "暂无位置";
         } else {
             String location = dispCircuitRecordListispCircuitRecord.get(0).getLngLatCircuit();//位置坐标
-            int one = location.lastIndexOf(";");
-            String str = location.substring((one + 1), location.length());
-            String[] str1 = str.split(":");
+            String[] str = location.split(";");
+            String place=str[str.length-1];
+            String[] str1 = place.split(":");
             lngLatCircuit = str1[1];//当前位置
         }
         return lngLatCircuit;
