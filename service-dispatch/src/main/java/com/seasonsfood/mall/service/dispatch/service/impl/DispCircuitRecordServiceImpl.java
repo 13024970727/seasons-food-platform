@@ -4,7 +4,6 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.codingapi.tx.annotation.TxTransaction;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.seasonsfood.mall.business.api.domain.UserGoodsOrder;
 import com.seasonsfood.mall.core.service.impl.BaseServiceImpl;
 import com.seasonsfood.mall.service.dispatch.api.domain.DispCircuitRecord;
 import com.seasonsfood.mall.service.dispatch.api.param.ParamDeliveryOrederInfo;
@@ -19,10 +18,7 @@ import com.seasonsfood.mall.util.model.ListResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
-
-import javax.annotation.Resource;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.annotation.Resource;;
 import java.util.*;
 
 /**
