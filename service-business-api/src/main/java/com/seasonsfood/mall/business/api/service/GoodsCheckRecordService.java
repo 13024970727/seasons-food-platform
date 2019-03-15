@@ -1,6 +1,7 @@
 package com.seasonsfood.mall.business.api.service;
 
 import com.seasonsfood.mall.business.api.domain.GoodsCheckRecord;
+import com.seasonsfood.mall.business.api.model.SelectGoodScheckRecordParam;
 import com.seasonsfood.mall.business.api.result.CheckParticulars;
 import com.seasonsfood.mall.core.service.BaseService;
 import com.seasonsfood.mall.util.constant.ResponseCode;
@@ -22,18 +23,15 @@ public interface GoodsCheckRecordService extends BaseService<GoodsCheckRecord> {
     //寄存商品破损,添加记录
     ResponseCode scrap(Long id, BigDecimal number, String remark);
 
-    /**jcw
-     * 寄存商品列表
-     * @param goodsName  商品名称
-     * @param shopName   店铺名称
-     * @param categoryId 分类ID
-     * @param stateId    库存状态
-     * @param time       时间
-     * @param pageNum
-     * @param pageSize
-     * @return
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/12-16:16
+     * @methodExplain：
+     * @param selectGoodScheckRecordParam goodsName 商品名称 shopName   店铺名称 categoryName 分类  saveStateId  库存状态
+     *   stateID 展示状态 startTime;//起始时间 endTime;//结束时间
+     * @return：
      */
-    ListResponse<GoodsCheckRecord> selectGoodScheckRecord(String goodsName, String shopName, String goodsCategoryName, Integer categoryId, Integer stateId, Integer saveStateId, Date time, Integer pageNum, Integer pageSize);
+    ListResponse<GoodsCheckRecord> selectGoodScheckRecord(SelectGoodScheckRecordParam selectGoodScheckRecordParam);
     /**jcw
      * 寄存商品信息详情
      * @param checkId 寄存商品ID

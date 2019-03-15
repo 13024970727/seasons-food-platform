@@ -13,6 +13,10 @@
         <result column="create_time" property="createTime" jdbcType="DATE" />
     </resultMap>
     <!--永久修改配送顺序-->
+    <update id="updateCircuitOrderly" >
+     update disp_circuit set circuit_orderly=#{circuitOrderly} where  id=#{circuitId}
+    </update>
+    <!--永久修改配送顺序-->
     <update id="updateDispOrderly" >
      update disp_circuit set dispatch_orderly=#{dispatchOrderly} where  dispatch_id=#{dispatchId}
     </update>
@@ -29,4 +33,9 @@
     <update id="updateDelivery"   >
        update user_goods_order set delivery_user_id=#{dispatchId} , circuit_id=#{dispCircuitId} where id=#{orderId}
     </update>
+
+    <!--启用配送线路总条数-->
+    <select id="countCircuitNum"   resultType="java.lang.Integer">
+       select COUNT(*) from disp_circuit where is_del=0 and is_start=1
+    </select>
 </mapper>

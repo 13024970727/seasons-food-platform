@@ -5,6 +5,8 @@ import com.seasonsfood.mall.service.dispatch.api.result.LngAndLat;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 public interface DispSiteMapper extends Mapper<DispSite> {
 
     /**
@@ -26,8 +28,8 @@ public interface DispSiteMapper extends Mapper<DispSite> {
      * @return：
      */
     Long findSite(@Param("dispatchId") Long dispatchId,@Param("lng") Double lng,@Param("lat") Double lat);
-  /* List<DispSite> getSiteListByStreetId(Long id);
-    List<DispSiteResp> listModelSiteList(DispSiteRequest request);
-    List<StreetAndSite> findSiteLocation(String siteName);*/
+    List<DispSite> getSiteListByStreetId(Long id);
+
+
 
 }

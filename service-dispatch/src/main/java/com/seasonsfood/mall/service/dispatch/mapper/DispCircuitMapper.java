@@ -19,6 +19,16 @@ public interface DispCircuitMapper extends Mapper<DispCircuit> {
 
     /**
      * @author jiangchengwei
+     * @date: 2019/3/11-11:32
+     * @methodExplain： 修改永久线路顺序
+     * @param circuitId 配送员
+     * @param  circuitOrderly 配送顺序
+     * @return：
+     */
+    Integer updateCircuitOrderly(@Param("circuitId")Long circuitId, @Param("circuitOrderly")Integer circuitOrderly);
+
+    /**
+     * @author jiangchengwei
      * @date: 2019/3/11-11:31
      * @methodExplain： 查看永久配送线路列表
      * @param stateId
@@ -45,4 +55,13 @@ public interface DispCircuitMapper extends Mapper<DispCircuit> {
      * @return：
      */
     Integer updateDelivery(@Param("orderId")Long orderId,@Param("dispatchId")Long dispatchId, @Param("dispCircuitId")Long dispCircuitId);
+
+    /**
+     * @param
+     * @author jiangchengwei
+     * @date: 2019/3/14-10:28
+     * @methodExplain： 统计启用的线路数量
+     * @return： java.lang.Integer
+     */
+    Integer countCircuitNum();
 }
