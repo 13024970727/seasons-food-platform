@@ -72,10 +72,10 @@ site order by ACOS(SIN((#{lat}
             and delivery_user_id=(SELECT id FROM sys_user where username=#{dispatchName})
         </if>
         <if test="dispatchState!=null and dispatchState=0">
-            and font_user_id=#{dispatchState}
+            and delivery_user_id=0
         </if>
         <if test="dispatchState!=null and dispatchState=!0">
-            and font_user_id!=0
+            and delivery_user_id!=0
         </if>
         <if test="state!=null">
             and status=#{state}
