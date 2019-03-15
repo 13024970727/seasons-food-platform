@@ -40,15 +40,13 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
      * @methodExplain：查询今日配送线路列表
      * @return：com.seasonsfood.mall.util.model.ListResponse<com.seasonsfood.mall.service.dispatch.api.result.TodayDispCircuitRecordList>
      */
-    @Override //hahahahahahahahah
+    @Override//哈哈哈哈
     public ListResponse<TodayDispCircuitRecordList> selectTodayDispCircuitRecord(Integer pageNum, Integer pageSize, String time) {
         PageHelper.startPage(pageNum, pageSize);
         List<TodayDispCircuitRecordList> todayDispCircuitRecordList = dispCuitcuitRecordMapper.selectTodayDispCircuitRecord(time);
-        PageHelper.startPage(pageNum, pageSize);
         PageInfo pageInfo = new PageInfo(todayDispCircuitRecordList);
         return new ListResponse(pageInfo);
     }
-
     /**
      * @param dispatchId 配送员ID
      * @param time       时间
