@@ -100,7 +100,13 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
         }
         return ResponseCode.SUCCESS;
     }
-
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/11-10:52
+     * @methodExplain： 区域管理 统计未分配配送员的订单数量
+     * @param
+     * @return：int
+     */
     @Override
     public int selectNoDeliveryNum() {
         /**
