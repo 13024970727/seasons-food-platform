@@ -46,7 +46,7 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
      */
     @Override
     public ListResponse<TodayDispCircuitRecordList> selectTodayDispCircuitRecord(Integer pageNum, Integer pageSize, String time) {
-
+        PageHelper.startPage(pageNum, pageSize);
         List<TodayDispCircuitRecordList> todayDispCircuitRecordList = dispCuitcuitRecordMapper.selectTodayDispCircuitRecord(time);
         PageHelper.startPage(pageNum, pageSize);
         PageInfo pageInfo = new PageInfo(todayDispCircuitRecordList);

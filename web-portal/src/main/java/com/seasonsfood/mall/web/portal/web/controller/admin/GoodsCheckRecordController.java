@@ -2,6 +2,7 @@ package com.seasonsfood.mall.web.portal.web.controller.admin;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.seasonsfood.mall.business.api.domain.GoodsCheckRecord;
+import com.seasonsfood.mall.business.api.model.SelectGoodScheckRecordParam;
 import com.seasonsfood.mall.business.api.service.GoodsCheckRecordService;
 import com.seasonsfood.mall.util.constant.ResponseCode;
 import com.seasonsfood.mall.util.exception.BizException;
@@ -86,29 +87,26 @@ public class GoodsCheckRecordController {
 
 
 
-    /**jcw
-     * 寄存商品列表
-     * @param goodsName  商品名称
-     * @param shopName   店铺名称
-     * @param categoryId 分类ID
-     * @param stateId    库存状态
-     * @param time       时间
-     * @param pageNum
-     * @param pageSize
-     * @return
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/12-16:16
+     * @methodExplain：
+     * @param selectGoodScheckRecordParam goodsName 商品名称 shopName   店铺名称 categoryName 分类  saveStateId  库存状态
+     * stateID 展示状态 startTime;//起始时间 endTime;//结束时间
+     * @return：
      */
     @PostMapping(value = "selectGoodsCheckRecord")
-    public JsonResponse selectGoodsCheckRecord(String goodsName, String shopName,String goodsCategoryName, Integer categoryId, Integer stateId, Integer saveStateId,Date time, Integer pageNum, Integer pageSize) {
-        if (pageNum == null) {
-            pageNum = 1;
+    public JsonResponse selectGoodsCheckRecord(SelectGoodScheckRecordParam selectGoodScheckRecordParam) {
+        if (selectGoodScheckRecordParam.getPageNum() == null) {
+            selectGoodScheckRecordParam.setPageNum(1);
         }
-        if (pageSize == null) {
-            pageSize = 2;
+        if (selectGoodScheckRecordParam.getPageSize() == null) {
+            selectGoodScheckRecordParam.setPageSize(2);
         }
-        if (stateId == null) {
-            return ResponseUtils.setJsonAndMsg(ResponseCode.NOT_NULL, "寄存状态不能为空", true);
+        if (selectGoodScheckRecordParam.getStateId() == null) {
+            selectGoodScheckRecordParam.setStateId(1);
         }
-        return ResponseUtils.setSuccess(goodsCheckRecordService.selectGoodScheckRecord( goodsName,  shopName,goodsCategoryName, categoryId,  stateId, saveStateId,  time,  pageNum,  pageSize));
+        return ResponseUtils.setSuccess(goodsCheckRecordService.selectGoodScheckRecord(selectGoodScheckRecordParam));
 
     }
 

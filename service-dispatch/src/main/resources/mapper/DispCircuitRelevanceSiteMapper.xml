@@ -24,4 +24,23 @@
  disp_circuit dc on dc.id=dcrs.circuit_id where  dcrs.site_id= #{siteId} and dc.dispatch_id=#{dispatchId}
 
     </select>
+
+    <!--统计这条线下的配送地点数量-->
+    <select id="countCircuitDispSite" resultType="java.lang.Integer">
+     select COUNT(*) from disp_circuit_relevance_site dcrs
+join disp_site ds on dcrs.site_id=ds.id where dcrs.circuit_id=#{circuitId}
+    </select>
+
+    <!--统计这条线下的配送地点数量-->
+    <select id="countCircuitRegisterUserNum" resultType="java.lang.Integer">
+     select SUM(ds.register_user_num) from
+ disp_circuit_relevance_site dcrs
+join disp_site ds on dcrs.site_id=ds.id where dcrs.circuit_id=#{circuitId} GROUP BY circuit_id
+    </select>
+
+    <!--统计启用配送地点数量和注册用户数量-->
+    <select id="countRegisterUserNumAndSiteNum" resultType="com.seasonsfood.mall.service.dispatch.api.result.RegisterUserNumAndSiteNum">
+     select SUM(register_user_num) registerUserNum,COUNT(*) siteNum from
+ disp_site   where is_del=0 and is_start=1
+    </select>
 </mapper>

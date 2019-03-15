@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.seasonsfood.mall.business.api.domain.*;
 import com.seasonsfood.mall.business.api.model.GoodsInfo;
+import com.seasonsfood.mall.business.api.model.SelectGoodScheckRecordParam;
 import com.seasonsfood.mall.business.api.result.CheckList;
 import com.seasonsfood.mall.business.api.result.CheckParticulars;
 import com.seasonsfood.mall.business.api.service.GoodsCheckRecordService;
@@ -186,313 +187,27 @@ public class GoodsCheckRecordServiceImpl extends BaseServiceImpl<GoodsCheckRecor
 
 
     /**
-     * jcw
-     * 寄存商品列表
-     *
-     * @param goodsName  商品名称
-     * @param shopName   店铺名称
-     * @param categoryId 分类ID
-     * @param stateId    库存状态
-     * @param time       时间
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param selectGoodScheckRecordParam goodsName 商品名称 shopName   店铺名称 categoryName 分类  saveStateId  库存状态
+     *                                    stateID 展示状态 startTime;//起始时间 endTime;//结束时间
+     * @author jiangchengwei
+     * @date: 2019/3/12-16:16
+     * @methodExplain：
+     * @return：
      */
     @Override
-    public ListResponse<GoodsCheckRecord> selectGoodScheckRecord(String goodsName, String shopName, String goodsCategoryName, Integer categoryId, Integer stateId, Integer saveStateId, Date time, Integer pageNum, Integer pageSize) {
-        if (goodsName != null) {
-          /*  Integer pageNum1 = (2 - 1) * 2;
-            Integer pageSize1 = 2;
-            String shopName1="%" + shopName + "%";
-            List<GoodsCheckRecord> goodsCheckRecord = goodsCheckRecordMapper.findCheckRecordByGoods(shopName1);
-            List<CheckList> checkList = new ArrayList<>();
-             System.out.println(goodsCheckRecord.size()+goodsCheckRecord.get(0).getId());*/
-            PageInfo<Goods> pageInfo;
-            PageHelper.startPage(pageNum,pageSize);
-            Example example = new Example(Goods.class);
-            Example.Criteria criteria = example.createCriteria();
-            String goodsName1 = "%" + goodsName + "%";
-            criteria.andLike("goodsName", goodsName1);
-            //查出商品id
-            example.selectProperties("id");
-            pageInfo=new PageInfo<>(goodsMapper.selectByExample(example));
-            List<CheckList> checkList = new ArrayList<>();
-
-            for(int j=0;j<pageInfo.getList().size();j++){
-                Example example1 = new Example(GoodsCheckRecord.class);
-                Example.Criteria criteria1 = example1.createCriteria();
-                criteria1.andEqualTo("stateId", 1);
-                if (saveStateId==null){
-                    saveStateId=1;
-                }
-                criteria1.andEqualTo("saveStateId", saveStateId);
-                //通过商品id查出该商品的寄存记录
-                criteria1.andEqualTo("goodsId", pageInfo.getList().get(j).getId());
-                example1.selectProperties("id", "goodsId", "warehouseEntryTime", "warehouseId", "expirationDate", "quantityInStock", "unitId", "quantityWarning", "dateInProduced", "deadlineWarning");
-                List<GoodsCheckRecord> goodsCheckRecord=goodsCheckRecordMapper.selectByExample(example1);
-                //查出寄存商品的信息
-                for (int i = 0; i < goodsCheckRecord.size(); i++) {
-
-                    System.out.println(goodsCheckRecord.size());
-                    CheckList checkListBean = new CheckList();
-                    Long goodsId = goodsCheckRecord.get(i).getGoodsId();
-                    System.out.println(goodsId);
-                    //查出商品的所属分类和商品的所属商店
-                    GoodsInfo goodsInfo = goodsCheckRecordMapper.selectGoodsInfo(goodsId);
-                    Long responsiblePersonId = goodsCheckRecord.get(i).getResponsiblePersonId();
-                    Date warehouseEntryTime = goodsCheckRecord.get(i).getWarehouseEntryTime();
-                    Date now = new Date();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//可以方便地修改日期格式
-                    String currentTime = dateFormat.format(now); //当前时间
-                    String warehouseTime = dateFormat.format(warehouseEntryTime);  //入库时间
-                    Long expirationDate = goodsCheckRecord.get(i).getExpirationDate();//保质期
-                    Date dateInProduced = goodsCheckRecord.get(i).getDateInProduced();//生产日期
-                    String dateInProduced1 = dateFormat.format(dateInProduced);//生产日期
-                    Long deadlineWarning = goodsCheckRecord.get(i).getDeadlineWarning();//保质期预警天数
-                    long day = 0;//已存时间
-                    long sellByDate;//已过保质期天数
-                    Long date = null;//剩余保质期天数
-                    String warningMessage;//预警消息
-                    try {
-                        Date currentTime1 = dateFormat.parse(currentTime);//当前时间
-                        Date warehouseTime1 = dateFormat.parse(warehouseTime);//入库时间
-                        //获取相减后天数
-                        day = (currentTime1.getTime() - warehouseTime1.getTime()) / (24 * 60 * 60 * 1000);
-                        Date dateOfManufacture = dateFormat.parse(dateInProduced1);//生产日期
-                        sellByDate = (currentTime1.getTime() - dateOfManufacture.getTime()) / (24 * 60 * 60 * 1000);
-                        date = expirationDate / 2 - sellByDate;//剩余保质期天数
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    if (date <= deadlineWarning) {
-                        warningMessage = "商品保质期即将过半";
-                    } else {
-                        warningMessage = "正常";
-                    }
-                    Integer warehouseId = goodsCheckRecord.get(i).getWarehouseId();//仓库ID
-                    //查出仓库名称
-                    GoodsConsignmentWarehouse goodsConsignmentWarehouse = goodsConsignmentWarehouseMapper.selectByPrimaryKey(warehouseId);
-                    BigDecimal quantityInStock = goodsCheckRecord.get(i).getQuantityInStock();//库存数量
-                    Integer unitId = goodsCheckRecord.get(i).getUnitId();
-                    GoodsMeteringUnit goodsMeteringUnit = goodsMeteringUnitMapper.selectByPrimaryKey(unitId);
-
-                    BigDecimal quantityWarning = goodsCheckRecord.get(i).getQuantityWarning();//预警数量
-                    String warningMessage1;//预警消息
-                    GoodsCheckRecord goodsCheckRecord1 = new GoodsCheckRecord();
-                    goodsCheckRecord1.setId(goodsCheckRecord.get(i).getId());
-                    if (quantityWarning.compareTo(quantityInStock) == 1) {
-                        warningMessage1 = "库存数量不足";
-                    } else {
-                        warningMessage1 = "库存充足";
-                    }
-                    checkListBean.setId(goodsCheckRecord.get(i).getId());
-                    checkListBean.setGoodsId(goodsId);
-                    checkListBean.setGoodsName(goodsInfo.getGoodsName());
-                    checkListBean.setShopName(goodsInfo.getShopName());
-                    checkListBean.setCategoryName(goodsInfo.getCategoryName());
-                    checkListBean.setUnitName(goodsMeteringUnit.getUnitName());
-                    checkListBean.setQuantityInStock(quantityInStock);
-                    checkListBean.setCountState(warningMessage1);
-                    checkListBean.setExpirationDateState(warningMessage);
-                    checkListBean.setSaveTime(day);
-                    checkList.add(checkListBean);
-                }
-            }
-            return new ListResponse(checkList.size(), pageNum, pageNum, checkList);
+    public ListResponse<GoodsCheckRecord> selectGoodScheckRecord(SelectGoodScheckRecordParam selectGoodScheckRecordParam) {
+        PageHelper.startPage(selectGoodScheckRecordParam.getPageNum(), selectGoodScheckRecordParam.getPageSize());
+        if (selectGoodScheckRecordParam.getGoodsName()!=null){
+            String goodsName = "%" + selectGoodScheckRecordParam.getGoodsName() + "%";
+            selectGoodScheckRecordParam.setGoodsName(goodsName);
+            System.out.println(selectGoodScheckRecordParam.getGoodsName());
         }
-
-        if (shopName != null) {
-            PageInfo<ShopBaseInfo> pageInfo;
-            PageHelper.startPage(pageNum, pageSize);
-            Example example = new Example(ShopBaseInfo.class);
-            Example.Criteria criteria = example.createCriteria();
-            String shopName1 = "%" + shopName + "%";
-            criteria.andLike("shopName", shopName1);
-            //查出商店id
-            example.selectProperties("id");
-            pageInfo = new PageInfo<>(shopBaseInfoMapper.selectByExample(example));
-            List<CheckList> checkList = new ArrayList<>();
-
-            for (int j = 0; j < pageInfo.getList().size(); j++) {
-                PageHelper.startPage(pageNum, 3);
-                Example example1 = new Example(GoodsCategoryHasGoods.class);
-                Example.Criteria criteria1 = example1.createCriteria();
-                //通过商店id查出商店寄存的商品id
-                criteria1.andEqualTo("shopBaseInfoId", pageInfo.getList().get(j).getId());
-                PageInfo<GoodsCategoryHasGoods> shopPageInfo = new PageInfo<>(goodsCategoryHasGoodsMapper.selectByExample(example1));
-                for (int z = 0; z < shopPageInfo.getList().size(); z++) {
-
-                    if (saveStateId == null) {
-                        saveStateId = 1;
-                    }
-                    Example example2 = new Example(GoodsCheckRecord.class);
-                    Example.Criteria criteria2 = example2.createCriteria();
-                    criteria2.andEqualTo("saveStateId", saveStateId);
-                    criteria2.andEqualTo("goodsId", shopPageInfo.getList().get(z).getGoodsId());
-                    example2.selectProperties("id", "goodsId", "warehouseEntryTime", "warehouseId", "expirationDate", "quantityInStock", "unitId", "quantityWarning", "dateInProduced", "deadlineWarning");
-                    List<GoodsCheckRecord> goodsCheckRecord = goodsCheckRecordMapper.selectByExample(example2);
-                    //查出寄存商品的信息
-                    for (int i = 0; i < goodsCheckRecord.size(); i++) {
-                        CheckList checkListBean = new CheckList();
-                        Long goodsId = goodsCheckRecord.get(i).getGoodsId();
-                        //查出商品的所属分类和商品的所属商店
-                        GoodsInfo goodsInfo = goodsCheckRecordMapper.selectGoodsInfo(goodsId);
-                        Long responsiblePersonId = goodsCheckRecord.get(i).getResponsiblePersonId();
-                        Date warehouseEntryTime = goodsCheckRecord.get(i).getWarehouseEntryTime();
-                        Date now = new Date();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//可以方便地修改日期格式
-                        String currentTime = dateFormat.format(now); //当前时间
-                        String warehouseTime = dateFormat.format(warehouseEntryTime);  //入库时间
-                        Long expirationDate = goodsCheckRecord.get(i).getExpirationDate();//保质期
-                        Date dateInProduced = goodsCheckRecord.get(i).getDateInProduced();//生产日期
-                        String dateInProduced1 = dateFormat.format(dateInProduced);//生产日期
-                        Long deadlineWarning = goodsCheckRecord.get(i).getDeadlineWarning();//保质期预警天数
-                        long day = 0;//已存时间
-                        long sellByDate;//已过保质期天数
-                        Long date = null;//剩余保质期天数
-                        String warningMessage;//预警消息
-                        try {
-                            Date currentTime1 = dateFormat.parse(currentTime);//当前时间
-                            Date warehouseTime1 = dateFormat.parse(warehouseTime);//入库时间
-                            //获取相减后天数
-                            day = (currentTime1.getTime() - warehouseTime1.getTime()) / (24 * 60 * 60 * 1000);
-                            Date dateOfManufacture = dateFormat.parse(dateInProduced1);//生产日期
-                            sellByDate = (currentTime1.getTime() - dateOfManufacture.getTime()) / (24 * 60 * 60 * 1000);
-                            date = expirationDate / 2 - sellByDate;//剩余保质期天数
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date <= deadlineWarning) {
-                            warningMessage = "商品保质期即将过半";
-                        } else {
-                            warningMessage = "正常";
-                        }
-                        Integer warehouseId = goodsCheckRecord.get(i).getWarehouseId();//仓库ID
-                        //查出仓库名称
-                        GoodsConsignmentWarehouse goodsConsignmentWarehouse = goodsConsignmentWarehouseMapper.selectByPrimaryKey(warehouseId);
-                        BigDecimal quantityInStock = goodsCheckRecord.get(i).getQuantityInStock();//库存数量
-                        Integer unitId = goodsCheckRecord.get(i).getUnitId();
-                        GoodsMeteringUnit goodsMeteringUnit = goodsMeteringUnitMapper.selectByPrimaryKey(unitId);
-
-                        BigDecimal quantityWarning = goodsCheckRecord.get(i).getQuantityWarning();//预警数量
-                        String warningMessage1;//预警消息
-                        if (quantityWarning.compareTo(quantityInStock) == 1) {
-                            warningMessage1 = "库存数量不足";
-                        } else {
-                            warningMessage1 = "库存充足";
-                        }
-                        checkListBean.setId(goodsCheckRecord.get(i).getId());
-                        checkListBean.setGoodsId(goodsId);
-                        checkListBean.setGoodsName(goodsInfo.getGoodsName());
-                        checkListBean.setShopName(goodsInfo.getShopName());
-                        checkListBean.setCategoryName(goodsInfo.getCategoryName());
-                        checkListBean.setUnitName(goodsMeteringUnit.getUnitName());
-                        checkListBean.setQuantityInStock(quantityInStock);
-                        checkListBean.setCountState(warningMessage1);
-                        checkListBean.setExpirationDateState(warningMessage);
-                        checkListBean.setSaveTime(day);
-                        checkList.add(checkListBean);
-                    }
-                }
-            }
-            return new ListResponse(checkList.size(), pageInfo.getPages(), pageInfo.getPageNum(), checkList);
-        }
-
-        if (goodsCategoryName != null) {
-            PageInfo<GoodsCategory> pageInfo;
-            PageHelper.startPage(pageNum, 1);
-            Example example = new Example(GoodsCategory.class);
-            Example.Criteria criteria = example.createCriteria();
-            String categoryName = "%" + goodsCategoryName + "%";
-            criteria.andLike("categoryName", categoryName);
-            example.selectProperties("id");
-            pageInfo = new PageInfo<>(goodsCategoryMapper.selectByExample(example));
-            List<CheckList> checkList = new ArrayList<>();
-
-            for (int j = 0; j < pageInfo.getList().size(); j++) {
-                PageHelper.startPage(pageNum, 3);
-                Example example1 = new Example(GoodsCategoryHasGoods.class);
-                Example.Criteria criteria1 = example1.createCriteria();
-                criteria1.andEqualTo("goodsCategoryId", pageInfo.getList().get(j).getId());
-                PageInfo<GoodsCategoryHasGoods> shopPageInfo = new PageInfo<>(goodsCategoryHasGoodsMapper.selectByExample(example1));
-                for (int z = 0; z < shopPageInfo.getList().size(); z++) {
-                    if (saveStateId == null) {
-                        saveStateId = 1;
-                    }
-                    Example example2 = new Example(GoodsCheckRecord.class);
-                    Example.Criteria criteria2 = example2.createCriteria();
-                    criteria2.andEqualTo("saveStateId", saveStateId);
-                    criteria2.andEqualTo("goodsId", shopPageInfo.getList().get(z).getGoodsId());
-                    //查出所需要的字段
-                    example2.selectProperties("id", "goodsId", "warehouseEntryTime", "warehouseId", "expirationDate", "quantityInStock", "unitId", "quantityWarning", "dateInProduced", "deadlineWarning");
-                    List<GoodsCheckRecord> goodsCheckRecord = goodsCheckRecordMapper.selectByExample(example2);
-
-                    for (int i = 0; i < goodsCheckRecord.size(); i++) {
-                        CheckList checkListBean = new CheckList();
-                        Long goodsId = goodsCheckRecord.get(i).getGoodsId();
-                        //查出商品的所属分类和商品的所属商店
-                        GoodsInfo goodsInfo = goodsCheckRecordMapper.selectGoodsInfo(goodsId);
-                        Long responsiblePersonId = goodsCheckRecord.get(i).getResponsiblePersonId();
-                        Date warehouseEntryTime = goodsCheckRecord.get(i).getWarehouseEntryTime();
-                        Date now = new Date();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//可以方便地修改日期格式
-                        String currentTime = dateFormat.format(now); //当前时间
-                        String warehouseTime = dateFormat.format(warehouseEntryTime);  //入库时间
-                        Long expirationDate = goodsCheckRecord.get(i).getExpirationDate();//保质期
-                        Date dateInProduced = goodsCheckRecord.get(i).getDateInProduced();//生产日期
-                        String dateInProduced1 = dateFormat.format(dateInProduced);//生产日期
-                        Long deadlineWarning = goodsCheckRecord.get(i).getDeadlineWarning();//保质期预警天数
-                        long day = 0;//已存时间
-                        long sellByDate;//已过保质期天数
-                        Long date = null;//剩余保质期天数
-                        String warningMessage;//预警消息
-                        try {
-                            Date currentTime1 = dateFormat.parse(currentTime);//当前时间
-                            Date warehouseTime1 = dateFormat.parse(warehouseTime);//入库时间
-                            //获取相减后天数
-                            day = (currentTime1.getTime() - warehouseTime1.getTime()) / (24 * 60 * 60 * 1000);
-                            Date dateOfManufacture = dateFormat.parse(dateInProduced1);//生产日期
-                            sellByDate = (currentTime1.getTime() - dateOfManufacture.getTime()) / (24 * 60 * 60 * 1000);
-                            date = expirationDate / 2 - sellByDate;//剩余保质期天数
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        if (date <= deadlineWarning) {
-                            warningMessage = "商品保质期即将过半";
-                        } else {
-                            warningMessage = "正常";
-                        }
-                        Integer warehouseId = goodsCheckRecord.get(i).getWarehouseId();//仓库ID
-                        //查出仓库名称
-                        GoodsConsignmentWarehouse goodsConsignmentWarehouse = goodsConsignmentWarehouseMapper.selectByPrimaryKey(warehouseId);
-                        BigDecimal quantityInStock = goodsCheckRecord.get(i).getQuantityInStock();//库存数量
-                        Integer unitId = goodsCheckRecord.get(i).getUnitId();
-                        GoodsMeteringUnit goodsMeteringUnit = goodsMeteringUnitMapper.selectByPrimaryKey(unitId);
-                        BigDecimal quantityWarning = goodsCheckRecord.get(i).getQuantityWarning();//预警数量
-                        String warningMessage1;//预警消息
-                        if (quantityWarning.compareTo(quantityInStock) == 1) {
-                            warningMessage1 = "库存数量不足";
-                        } else {
-                            warningMessage1 = "库存充足";
-                        }
-                        checkListBean.setId(goodsCheckRecord.get(i).getId());
-                        checkListBean.setGoodsId(goodsId);
-                        checkListBean.setGoodsName(goodsInfo.getGoodsName());
-                        checkListBean.setShopName(goodsInfo.getShopName());
-                        checkListBean.setCategoryName(goodsInfo.getCategoryName());
-                        checkListBean.setUnitName(goodsMeteringUnit.getUnitName());
-                        checkListBean.setQuantityInStock(quantityInStock);
-                        checkListBean.setCountState(warningMessage1);
-                        checkListBean.setExpirationDateState(warningMessage);
-                        checkListBean.setSaveTime(day);
-                        checkList.add(checkListBean);
-                    }
-                }
-            }
-            return new ListResponse(checkList.size(), pageInfo.getPages(), pageInfo.getPageNum(), checkList);
-        }
-
-
+       if (selectGoodScheckRecordParam.getShopName()!=null){
+           String shopName = "%" + selectGoodScheckRecordParam.getShopName() + "%";
+           selectGoodScheckRecordParam.setShopName(shopName);
+           System.out.println(selectGoodScheckRecordParam.getShopName());
+       }
+        List<GoodsCheckRecord> goodsCheckRecordList = goodsCheckRecordMapper.selectGoodScheckRecord(selectGoodScheckRecordParam);
         List<CheckList> checkList = new ArrayList<>();
         PageHelper.startPage(pageNum, pageSize);
         Example example = new Example(GoodsCheckRecord.class);
@@ -539,17 +254,17 @@ public class GoodsCheckRecordServiceImpl extends BaseServiceImpl<GoodsCheckRecor
             } else {
                 warningMessage = "正常";
             }
-            Integer warehouseId = pageInfo.getList().get(i).getWarehouseId();//仓库ID
+            Integer warehouseId = goodsCheckRecordList.get(i).getWarehouseId();//仓库ID
             //查出仓库名称
             GoodsConsignmentWarehouse goodsConsignmentWarehouse = goodsConsignmentWarehouseMapper.selectByPrimaryKey(warehouseId);
-            BigDecimal quantityInStock = pageInfo.getList().get(i).getQuantityInStock();//库存数量
-            Integer unitId = pageInfo.getList().get(i).getUnitId();
+            BigDecimal quantityInStock = goodsCheckRecordList.get(i).getQuantityInStock();//库存数量
+            Integer unitId = goodsCheckRecordList.get(i).getUnitId();
             GoodsMeteringUnit goodsMeteringUnit = goodsMeteringUnitMapper.selectByPrimaryKey(unitId);
 
-            BigDecimal quantityWarning = pageInfo.getList().get(i).getQuantityWarning();//预警数量
+            BigDecimal quantityWarning = goodsCheckRecordList.get(i).getQuantityWarning();//预警数量
             String warningMessage1;//预警消息
             GoodsCheckRecord goodsCheckRecord = new GoodsCheckRecord();
-            goodsCheckRecord.setId(pageInfo.getList().get(i).getId());
+            goodsCheckRecord.setId(goodsCheckRecordList.get(i).getId());
             if (quantityWarning.compareTo(quantityInStock) == 1) {
                 warningMessage1 = "库存数量不足";
                 goodsCheckRecord.setSaveStateId(2);
@@ -559,7 +274,7 @@ public class GoodsCheckRecordServiceImpl extends BaseServiceImpl<GoodsCheckRecor
                 goodsCheckRecord.setSaveStateId(1);
                 goodsCheckRecordMapper.updateByPrimaryKeySelective(goodsCheckRecord);
             }
-            checkListBean.setId(pageInfo.getList().get(i).getId());
+            checkListBean.setId(goodsCheckRecordList.get(i).getId());
             checkListBean.setGoodsId(goodsId);
             checkListBean.setGoodsName(goodsInfo.getGoodsName());
             checkListBean.setShopName(goodsInfo.getShopName());
@@ -571,6 +286,8 @@ public class GoodsCheckRecordServiceImpl extends BaseServiceImpl<GoodsCheckRecor
             checkListBean.setSaveTime(day);
             checkList.add(checkListBean);
         }
+        PageInfo<GoodsCheckRecord> pageInfo = new PageInfo<>(goodsCheckRecordList);
+
         return new ListResponse(pageInfo.getTotal(), pageInfo.getPages(), pageInfo.getPageNum(), checkList);
     }
 

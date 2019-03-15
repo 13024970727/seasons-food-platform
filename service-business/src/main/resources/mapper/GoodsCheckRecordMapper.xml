@@ -45,5 +45,36 @@ join goods_category gc on gc.id= goods_category_id where c.goods_id=#{goodsId}
     FROM sys_user
     WHERE username = #{sysUserName}
 </select>
+    <!--寄存商品列表-->
+    <select id="selectGoodScheckRecord" parameterType="com.seasonsfood.mall.business.api.model.SelectGoodScheckRecordParam" resultType="com.seasonsfood.mall.business.api.domain.GoodsCheckRecord">
+        select  id, goods_id, warehouse_entry_time, warehouse_id, expiration_date, quantity_in_stock, unit_id, quantity_warning, date_in_produced, deadline_warning
+        from goods_check_record gc where 1=1
+        <if test="goodsName!=null ">
+            and gc.goods_id in
+            (select id from goods  where goods_name  like  #{goodsName} )
+        </if>
+        <if test="shopName!=null ">
+            and gc.goods_id in
+            (select goods_id from goods_category_has_goods gchg join shop_base_info sbi on gchg.shop_base_info_id=sbi.id where shop_name like #{shopName}  )
+        </if>
+        <if test="goodsCategoryName!=null">
+            and gc.goods_id in
+            (select goods_id from goods_category_has_goods gchg join goods_category gcc on gchg.goods_category_id=gcc.id where gcc.category_name=#{goodsCategoryName})
+        </if>
+        <if test="stateId!=null">
+            and state_id=#{stateId}
+        </if>
+        <if test="saveStateId!=null">
+            and saveStateId=#{saveStateId}
+        </if>
+        <if test="startTime!=null">
+            and warehouse_entry_time &gt;= #{startTime}
+        </if>
+        <if test="endTime!=null">
+            and warehouse_entry_time &lt;= #{endTime}
+        </if>
+    </select>
+
+
 
 </mapper>

@@ -1,6 +1,5 @@
 package com.seasonsfood.mall.business.api.domain;
 
-import org.springframework.data.annotation.Transient;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;

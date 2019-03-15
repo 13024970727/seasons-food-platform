@@ -139,6 +139,7 @@ public class DispCircuitController {
         return ResponseUtils.setSuccess(dispCircuitService.selectDispCircuitRecord(pageNum, pageSize, stateId));
 
     }
+
     /**
      * @author jiangchengwei
      * @date: 2019/3/11-10:42
@@ -273,7 +274,7 @@ public class DispCircuitController {
     /**
      * @author jiangchengwei
      * @date: 2019/3/8-9:50
-     * @methodExplain：查看今日配送订单列表
+     * @methodExplain：查看配送订单列表
      * @param paramDeliveryOrederInfo  用户 用户id，配送员，配送状态，分配状态，开始时间，结束时间
      * @return：com.seasonsfood.mall.util.model.JsonResponse
      */
@@ -287,5 +288,52 @@ public class DispCircuitController {
         }
         return ResponseUtils.setSuccess( dispCircuitRecordService.selectDeliveryOrederInfo(paramDeliveryOrederInfo));
     }
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/14-10:28
+     * @methodExplain： 统计这条线下的配送地点数量
+     * @param circuitId 线路ID
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
+     */
+    @PostMapping("countCircuitDispSite")
+    public JsonResponse countCircuitDispSite(Long circuitId) {
+        Assert.notNull(circuitId,"配送线路不能为空");
+        return ResponseUtils.setSuccess(dispCircuitRelevanceSiteService.countCircuitDispSite(circuitId));
+    }
 
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/14-10:53
+     * @methodExplain： 统计这条线下的注册用户数量
+     * @param circuitId 线路ID
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
+     */
+    @PostMapping("countCircuitRegisterUserNum")
+    public JsonResponse countCircuitRegisterUserNum(Long circuitId) {
+        Assert.notNull(circuitId,"配送线路不能为空");
+        return ResponseUtils.setSuccess(dispCircuitRelevanceSiteService.countCircuitRegisterUserNum(circuitId));
+    }
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/14-11:43
+     * @methodExplain： 统计启用的线路数量
+     * @param
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
+     */
+    @PostMapping("countCircuitNum")
+    public JsonResponse countCircuitNum() {
+
+        return ResponseUtils.setSuccess(dispCircuitService.countCircuitNum());
+    }
+    /**
+     * @author jiangchengwei
+     * @date: 2019/3/14-11:43
+     * @methodExplain： 统计启用配送地点数量和注册用户数量
+     * @param
+     * @return：com.seasonsfood.mall.util.model.JsonResponse
+     */
+    @PostMapping("countRegisterUserNumAndSiteNum")
+    public JsonResponse countRegisterUserNumAndSiteNum() {
+        return ResponseUtils.setSuccess(dispCircuitRelevanceSiteService.countRegisterUserNumAndSiteNum());
+    }
 }
