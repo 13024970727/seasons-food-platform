@@ -53,7 +53,7 @@ site order by ACOS(SIN((#{lat}
  * 3.1415) / 180 - (lng * 3.1415) / 180 ) ) * 6380
     </select>
     <select id="selectFontUserInfo" resultType="com.seasonsfood.mall.service.dispatch.api.result.FontUserOrderInfo">
-      select username,phone from font_user where id=#{userId}
+      select username,real_name,phone from font_user where id=#{userId}
     </select>
 
     <select id="selectdispatchName" resultType="java.lang.String">

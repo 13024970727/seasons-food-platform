@@ -13,7 +13,8 @@ public class DeliveryOrederInfo implements Serializable {
     private Long orderId;//订单编号
     private Long id;//用户账号
     private Long deliveryUserId;//用户账号
-    private String userName;//用户姓名
+    private String userName;//用户名
+    private String realName;//用户名
     private String areaName;//区域
     private String address;//地址
     private String dispatchName;//配送员

@@ -40,7 +40,7 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
      * @methodExplain：查询今日配送线路列表
      * @return：com.seasonsfood.mall.util.model.ListResponse<com.seasonsfood.mall.service.dispatch.api.result.TodayDispCircuitRecordList>
      */
-    @Override//哈哈哈哈
+    @Override
     public ListResponse<TodayDispCircuitRecordList> selectTodayDispCircuitRecord(Integer pageNum, Integer pageSize, String time) {
         PageHelper.startPage(pageNum, pageSize);
         List<TodayDispCircuitRecordList> todayDispCircuitRecordList = dispCuitcuitRecordMapper.selectTodayDispCircuitRecord(time);
@@ -89,7 +89,7 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
     @Transactional(rollbackFor = Exception.class)
     public ResponseCode updateTodayDispOrderly(List<DispCircuitRecord> dispCircuitRecord, String time) {
 
-        Integer succeed = null;
+        Integer succeed ;
         for (int i = 0; i < dispCircuitRecord.size(); i++) {
             Long dispatchId = dispCircuitRecord.get(i).getDispatchId();//配送时间
             Integer dispatchOrderly = dispCircuitRecord.get(i).getDispatchOrderly();//配送顺序
@@ -157,7 +157,8 @@ public class DispCircuitRecordServiceImpl extends BaseServiceImpl<DispCircuitRec
             //查出用户的一些基本信息
             FontUserOrderInfo userOrderInfo = dispCuitcuitRecordMapper.selectFontUserInfo(deliveryOrederInfoList.get(i).getId());
             String dispatchName = dispCuitcuitRecordMapper.selectdispatchName(deliveryOrederInfoList.get(i).getDeliveryUserId());
-            deliveryOrederInfoList.get(i).setUserName(userOrderInfo.getUserName());//用户名字
+            deliveryOrederInfoList.get(i).setUserName(userOrderInfo.getUserName());//用户名
+            deliveryOrederInfoList.get(i).setRealName(userOrderInfo.getRealName());//用户真实姓名
             deliveryOrederInfoList.get(i).setDispatchName(dispatchName);//配送员名字
             if (deliveryOrederInfoList.get(i).getStatus() == 1) {
                 deliveryOrederInfoList.get(i).setState("代付款");

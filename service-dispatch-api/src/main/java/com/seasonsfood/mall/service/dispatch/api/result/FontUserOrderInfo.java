@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class FontUserOrderInfo implements Serializable {
     private Long orderId;//订单编号
     private Long id;//用户账号
-    private String userName;//用户姓名
+    private String userName;//用户名
+    private String realName;//用户真实姓名
     private String deliveryAddress;//配送地址
     private Long phone;//手机号码
     public FontUserOrderInfo(){
