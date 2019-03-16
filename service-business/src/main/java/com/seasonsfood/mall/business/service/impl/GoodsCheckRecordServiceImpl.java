@@ -185,7 +185,6 @@ public class GoodsCheckRecordServiceImpl extends BaseServiceImpl<GoodsCheckRecor
 
 
 
-
     /**
      * @param selectGoodScheckRecordParam goodsName 商品名称 shopName   店铺名称 categoryName 分类  saveStateId  库存状态
      *                                    stateID 展示状态 startTime;//起始时间 endTime;//结束时间
@@ -209,31 +208,21 @@ public class GoodsCheckRecordServiceImpl extends BaseServiceImpl<GoodsCheckRecor
        }
         List<GoodsCheckRecord> goodsCheckRecordList = goodsCheckRecordMapper.selectGoodScheckRecord(selectGoodScheckRecordParam);
         List<CheckList> checkList = new ArrayList<>();
-        PageHelper.startPage(pageNum, pageSize);
-        Example example = new Example(GoodsCheckRecord.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("stateId", stateId);
-        if (saveStateId == null) {
-            saveStateId = 1;
-        }
-        criteria.andEqualTo("saveStateId", saveStateId);
-        example.selectProperties("id", "goodsId", "warehouseEntryTime", "warehouseId", "expirationDate", "quantityInStock", "unitId", "quantityWarning", "dateInProduced", "deadlineWarning");
-        PageInfo<GoodsCheckRecord> pageInfo = new PageInfo<>(goodsCheckRecordMapper.selectByExample(example));
-        for (int i = 0; i < pageInfo.getList().size(); i++) {
+        for (int i = 0; i < goodsCheckRecordList.size(); i++) {
             CheckList checkListBean = new CheckList();
-            Long goodsId = pageInfo.getList().get(i).getGoodsId();
+            Long goodsId = goodsCheckRecordList.get(i).getGoodsId();
             //查出商品的所属分类和商品的所属商店
             GoodsInfo goodsInfo = goodsCheckRecordMapper.selectGoodsInfo(goodsId);
-            Long responsiblePersonId = pageInfo.getList().get(i).getResponsiblePersonId();
-            Date warehouseEntryTime = pageInfo.getList().get(i).getWarehouseEntryTime();
+            //  Long responsiblePersonId = goodsCheckRecordList.get(i).getResponsiblePersonId();
+            Date warehouseEntryTime = goodsCheckRecordList.get(i).getWarehouseEntryTime();
             Date now = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//可以方便地修改日期格式
             String currentTime = dateFormat.format(now); //当前时间
             String warehouseTime = dateFormat.format(warehouseEntryTime);  //入库时间
-            Long expirationDate = pageInfo.getList().get(i).getExpirationDate();//保质期
-            Date dateInProduced = pageInfo.getList().get(i).getDateInProduced();//生产日期
+            Long expirationDate = goodsCheckRecordList.get(i).getExpirationDate();//保质期
+            Date dateInProduced = goodsCheckRecordList.get(i).getDateInProduced();//生产日期
             String dateInProduced1 = dateFormat.format(dateInProduced);//生产日期
-            Long deadlineWarning = pageInfo.getList().get(i).getDeadlineWarning();//保质期预警天数
+            Long deadlineWarning = goodsCheckRecordList.get(i).getDeadlineWarning();//保质期预警天数
             long day = 0;//已存时间
             long sellByDate;//已过保质期天数
             Long date = null;//剩余保质期天数

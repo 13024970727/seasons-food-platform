@@ -37,6 +37,14 @@ public class FontUserOrderInfo implements Serializable {
         this.userName = userName;
     }
 
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
     public String getDeliveryAddress() {
         return deliveryAddress;
     }

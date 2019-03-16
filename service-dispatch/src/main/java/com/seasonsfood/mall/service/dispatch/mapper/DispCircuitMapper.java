@@ -34,7 +34,7 @@ public interface DispCircuitMapper extends Mapper<DispCircuit> {
      * @param stateId
      * @return：
      */
-    List<DispCircuit> selectDispCircuit( @Param("pageNum") Integer pageNum,@Param("pageSize")Integer pageSize,@Param("stateId")Integer stateId);
+    List<DispCircuit> selectDispCircuit(@Param("stateId")Integer stateId);
 
     /**
      * @author jiangchengwei

@@ -87,8 +87,8 @@ site order by ACOS(SIN((#{lat}
             and create_time &lt;= #{endTime}
         </if>
         <!-->默认查出昨天的订单，今天配送<-->
-        <if test="startTime=null and endTime=null">
-            and DATEDIFF(ugo.create_time,NOW())=-1)
+        <if test="startTime==null and endTime==null">
+            and DATEDIFFcreate_time,NOW())=-1
         </if>
         order by create_time desc
     </select>
